@@ -1,0 +1,248 @@
+<div *ngIf="visible" class="main-content">
+    <div class="container-fluid">
+      <div class="card-content table-responsive">
+        <div class="row">
+            <div class="col-md-12">
+
+                    <div class="card-header ex1">
+
+                    <div *ngFor="let i of _MateriasDocentesServices.MateriasDocentesList">
+                        <button class="btn btn-danger btn-block" (click)="Cambiamodal(i)">{{i.Dm}} {{i.Dca}} {{i.Dp}}</button>
+
+                      </div>
+                    </div>
+
+            </div>
+        </div>
+      </div>
+
+    </div>
+</div>
+
+<div *ngIf="!visible" class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+<!------------------------------------------------Cabecera de la tabla------------------------------------------------>
+                    <div class="card-header" >
+                      <div class="row">
+                        <div class="col-sm-12">
+
+                            <div class="row no-gutters">
+                              <h4 class="title col-12 col-sm-6 col-md-8">Parte Diario de Faltas y Atrasos</h4>
+                              <div class="title col-6 col-md-4">REG 3.2.3-06</div>
+                            </div>
+                          <div class="row">
+                            <div class="col-md-4">
+                                <p class="category">Materia : <a class="contenido">{{Cabecera[0].materia}}</a>
+                                <p class="category">DOCENTE : <a class="contenido">{{nombre}}</a>
+                            </div>
+                            <div class="col-md-4">
+                                  <p class="category">Curso : <a class="contenido">{{Cabecera[0].curso}}</a>
+                                <p class="category">Paralelo : <a class="contenido">{{Cabecera[0].paralelo}}</a>
+                            </div>
+                              <div class="col-md-4">
+                                  <p class="category" *ngIf="this.bandera==='P'">Fecha : <a class="contenido">{{fecha}}</a>
+                                <p class="category">Inspectores : <a class="contenido">{{Cabecera[0].inspector}}</a>
+                              </div>
+                          </div>
+                        </div>
+                    </div>
+                    </div>
+  <!------------------------------------------------Comienzo de la tabla ------------------------------------------------>
+
+                  <div class="card-content table-responsive">
+                      <div class="row">
+
+                      <div class="col-sm-3">
+                        <a class="btn btn-success"  (click)="Atras()">
+                            <i class="material-icons">keyboard_backspace</i>Atras
+                        </a>
+                      </div>
+
+                      <div class="col-sm-3" *ngIf="this.bandera==='A'">
+                        <p class="category" >Fecha: <br>
+                         <input [ngModel]="fecha | date:'yyyy-MM-dd'" (ngModelChange)="fecha = $event" type="date" name="fecha"/>
+                      </div>
+
+                      <div class="col-sm-3">
+                          <p class="category">Selecione la Unidad:
+                            <select #Unidad id="Unidad" (change)="ConsultarAlumnos($event.target.value)" [value]=-1>
+                            <option *ngFor="let unidad of _MateriasDocentesServices.UnidadesList" [value]="unidad.cod_unidad">{{unidad.des_unidad}}</option>
+                            </select>
+
+                            <!-- Button trigger modal -->
+                            <a  class="btn"   data-toggle="modal" data-target="#exampleModalLong" >
+                            <span>GeneraPDF</span>
+                            </a>
+                      </div>
+
+
+
+
+
+                   </div>
+<!---------------------------------------------------------------------------------->
+                        <table class="table">
+                            <thead class="text-danger">
+                                <tr>
+
+                                    <th>Alumno</th>
+                                    <th>Asistencia</th>
+                                    <th *ngIf="this.bandera==='P'"> Tipo</th>
+                                    <th  *ngIf="this.bandera==='A'"> Abandono</th>
+                                    <th *ngIf="this.bandera==='A'">Atraso</th>
+                                    <th *ngIf="this.bandera==='A'">Retiro</th>
+                                    <th *ngIf="this.bandera==='A'">Falta</th>
+                                    <th *ngIf="this.bandera==='A'">Justificación</th>
+                                    <th *ngIf="this.bandera==='A'">Tipo</th>
+                                    <th *ngIf="this.bandera==='A'">Observación</th>
+                                </tr>
+                            </thead>
+<!--------------------Profesor------------------------------------------------------------------->
+                            <tbody *ngIf="this.bandera==='P'">
+
+                                <tr *ngFor="let item of this._MateriasDocentesServices.AlumnCursosList; let in = index">
+                                <!-- <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()">-->
+
+
+                               <td> {{item.nombre}}</td>
+                               <td >
+                                          <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox"  [disabled]="item.justifica" [(ngModel)]="item.asistencia"    (change)="checkAll(in)">
+                                              </label>
+                                            </div>
+                                  </td>
+                                  <td>
+                                    <select id="tipo_falta" [disabled]="item.asistencia" [(ngModel)]="item.tipo_falta" >
+                                        <option   *ngFor="let level of faltas" [ngValue]="level.valor" >{{level.name}}</option>
+                                    </select>
+
+                                </td>
+                                </tr>
+                            </tbody>
+<!------------------ Inspector--------------------------------------------------------------->
+<tbody *ngIf="this.bandera==='A'">
+
+    <tr *ngFor="let item of this._MateriasDocentesServices.AlumnCursosList; let in = index">
+    <!-- <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()">-->
+
+
+   <td> {{item.nombre}}</td>
+   <td *ngIf="item.asistencia===true"> 1</td>
+   <td *ngIf="item.asistencia > 1"> {{item.asistencia}}</td>
+   <td>{{item.abandono}}</td>
+   <td>{{item.atraso}}</td>
+    <td>{{item.retiro}}</td>
+   <td>{{item.falta}}</td>
+
+   <td >
+              <div class="checkbox">
+                <label>
+                    <input type="checkbox"  [(ngModel)]="item.justifica">
+                  </label>
+                </div>
+      </td>
+      <td>
+        <select id="tipo_falta"  [(ngModel)]="item.tipo_falta">
+            <option   *ngFor="let level of faltas" [ngValue]="level.valor" >{{level.name}}</option>
+        </select>
+
+    </td>
+
+
+
+        <td>
+          <textarea id="textarea"  maxlength="100" [disabled]="item.checked" [(ngModel)]="item.observacion"></textarea>
+        </td>
+        <td>
+          <button type="button" class="btn-info" data-toggle="modal" data-target="#exampleModal"
+                       (click)="DetalleAlum(item.cod_alum)">
+                      <i class="material-icons">find_in_page</i>
+            </button>
+        </td>
+          <!---  </form>------------>
+    </tr>
+</tbody>
+<!------------------------------------------------------------------------------------------->
+                            <div class="row">
+                        <div class="col-md-3">
+                                 <input type="submit" value="Guardar"   (click)="onSubmiLeccionario()" class="btn btn-success" >
+                                  <!---<input type="button" value="Atras"   (click)="Atras()" class="btn btn-success" >--->
+  </div>
+
+                          </div>
+                        </table>
+                    </div>
+
+  <!----------------------</form>--------------------------Fin de la tabla ------------------------------------------------>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!---------------------------------------------Modal de detalle-------------------------------------------->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Detalles</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+         <div *ngFor="let item of detallesMaterias;">
+                 <p class="categoryDetalle">Materia : <label class="contenido">{{item.materia}}</label>
+                  <p class="categoryDetalle">Docente : <label class="contenido">{{item.profesor}}</label>
+                  <p class="categoryDetalle">Tipo : <label class="contenido">{{item.tipo_falta}}</label>
+           <hr>
+         </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!---------------------------------------- Modal GeneraPDF--------------------------------------------------------->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Genera PDF</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+          <p class="category" >Fecha Inicio: <br>
+           <input [ngModel]="fecha_ini | date:'yyyy-MM-dd'" (ngModelChange)="fecha_ini = $event" type="date" name="fecha_ini"/>
+
+           <p class="category" >Fecha Fin: <br>
+            <input [ngModel]="fechafin | date:'yyyy-MM-dd'" (ngModelChange)="fechafin = $event" type="date" name="fechafin"/>
+      </div>
+      <div class="modal-footer">
+        <a  class="btn btn-success" class="btn btn-secondary" data-dismiss="modal" >
+          <span>Close</span>
+        </a>
+      <!---  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+        <a  class="btn btn-success"  (click)="GeneraPDF()">
+          <i class="material-icons">picture_as_pdf</i> <span>GeneraPDF</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,285 @@
+<div *ngIf="visible" class="main-content">
+    <div class="container-fluid">
+      <div class="card-content table-responsive">
+        <div class="row">
+            <div class="col-md-12">
+
+                    <div class="card-header ex1">
+                      <div *ngFor="let i of _MateriasDocentesServices.MateriasDocentesList">
+                        <button class="btn btn-danger btn-block" (click)="Cambiamodal(i)">{{i.Dm}} {{i.Dca}} {{i.Dp}}</button>
+
+                      </div>
+                    </div>
+
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<div *ngIf="!visible" class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                  <!------------------------------------------------Cabecera de la tabla------------------------------------------------>
+                  <!------------------------------------------------Cabecera de la tabla------------------------------------------------>
+                                      <div class="card-header" >
+                                        <div class="row">
+                                          <div class="col-sm-12">
+
+                                              <div class="row no-gutters">
+                                                <h4 class="title col-12 col-sm-6 col-md-8">Leccionario</h4>
+                                                <div class="title col-6 col-md-4">REG 2.4.2.1</div>
+                                              </div>
+                                            <div class="row">
+                                              <div class="col-md-4">
+                                                  <p class="category">Materia : <a class="contenido">{{Cabecera[0].materia}}</a>
+                                                  <p class="category">DOCENTE : <a class="contenido">{{nombre}}</a>
+                                              </div>
+                                              <div class="col-md-4">
+                                                    <p class="category">Curso : <a class="contenido">{{Cabecera[0].curso}}</a>
+                                                  <p class="category">Paralelo : <a class="contenido">{{Cabecera[0].paralelo}}</a>
+                                              </div>
+                                                <div class="col-md-4">
+                                                    <p class="category" *ngIf="this.bandera==='P'">Fecha : <a class="contenido">{{fecha}}</a>
+                                                  <p class="category">Inspectores : <a class="contenido">{{Cabecera[0].inspector}}</a>
+                                                </div>
+                                            </div>
+                                          </div>
+                                      </div>
+                                      </div>
+                    <!--------------------------  <form #registerForm="ngForm" (ngSubmit)="onSubmiLeccionario()"  >----------------------Comienzo de la tabla ------------------------------------------------>
+
+
+  <!--------------------------  <form #registerForm="ngForm" (ngSubmit)="onSubmiLeccionario()"  >----------------------Comienzo de la tabla ------------------------------------------------>
+
+                    <div class="card-content table-responsive">
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <p  class="category" >Fecha Inicio: <br>
+                           <input [ngModel]="fecha | date:'yyyy-MM-dd'" (ngModelChange)="fecha = $event" type="date" name="fecha"/>
+                        </div>
+
+                        <div *ngIf="bandera==='A'" class="col-sm-3">
+                          <p class="category" >Fecha Fin: <br>
+                           <input [ngModel]="fechafin | date:'yyyy-MM-dd'" (ngModelChange)="fechafin = $event" type="date" name="fecha"/>
+                        </div>
+
+                        <div class="col-6 col-sm-3">
+                            <p class="category">Selecione la Unidad:
+                              <select #Unidad="ngModel" name="Unidad"  [(ngModel)]="unidad" (change)="ConsultaLecionario(bandera)"  >
+                              <option *ngFor="let unidad of _MateriasDocentesServices.UnidadesList" [ngValue]="unidad.cod_unidad">{{unidad.des_unidad}}</option>
+                              </select>
+                        </div>
+                    <!---  <div *ngIf="bandera==='P'"  class="col-md-3">
+                        <a class="btn"  (click)="GeneraPDF()">
+                          <i class="material-icons">picture_as_pdf</i>  GeneraPDF
+                        </a>
+                      </div>-->
+
+
+
+                   </div>
+<!--------*ngIf="bandera==='P'"-------------------------------Vista Inspector--------------------------------------------------------------------------------->
+                            <table *ngIf="bandera==='A'" class="table">
+                                               <thead class="text-danger">
+                                                   <tr>
+                                                     <th>  Fecha</th>
+                                                       <th>  PDF</th>
+
+
+                                                   </tr>
+                                               </thead>
+
+                                               <tbody>
+
+                                                   <tr *ngFor="let item of _LeccionarioServices.LeccionarioInspectorList; let i=index ">
+                                                       <td>{{item.fecha}}</td>
+
+
+                                                       <td>
+                                                       <button  class="btn"
+                                                                 (click)="GeneraPDF(i)">
+                                                              <i class="material-icons">picture_as_pdf</i>  GeneraPDF
+                                                           </button>
+                                                           </td>
+
+                                                     <!---  </form>------------>
+                                                   </tr>
+
+                                               </tbody>
+
+                                               <div class="row">
+                                                   <div class="col-md-4">
+                                                    <input type="submit" value="Guardar"   (click)="GuardaTodo()" class="btn btn-success" >
+                                                     <!---<input type="button" value="Atras"   (click)="Atras()" class="btn btn-success" >--->
+
+                                                     <a class="btn btn-danger"  (click)="Atras()">
+                                                         <i class="material-icons">keyboard_backspace</i>
+                                                     </a>
+                                                   </div>
+                                             </div>
+                                           </table>
+<!--------*ngIf="bandera==='P'"-----------------------------Vista Profesor--------------------------------------------------------------------------------->
+                        <table class="table" *ngIf="bandera==='P'">
+                            <thead class="text-danger">
+                                <tr>
+                                  <th>  Hora</th>
+                                    <th>Destrezas con criterio de desempeño</th>
+                                    <th>Tareas</th>
+                                    <th>Observaciones</th>
+                                    <th> Firma</th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr *ngFor="let item of _LeccionarioServices.LeccionarioDocenteList; let i=index ">
+                                    <td>{{item.des_hora}}</td>
+                                    <td>
+                                     {{item.destrezas}}
+                                    </td>
+                                    <td>
+                                       {{item.tareas}}
+                                    </td>
+                                    <td>
+                                       {{item.observaciones}}
+                                    </td>
+                                    <td>
+                                          <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox"  [(ngModel)]="item.firmado" [disabled]="item.firmado">
+                                              </label>
+                                          </div>
+                                    </td>
+                                    <td>
+                                    <button  class="btn-info"
+                                               (click)="Edit(item,i)"
+                                                  data-toggle="modal" data-target=".bd-example-modal-lg"  [disabled]="item.firmado">
+                                                 <i class="fa fa-edit"></i>
+                                        </button>
+                                        <button  class="btn-danger"
+                                                     (click)="delete(i)">
+                                                     <i class="fa fa-minus"></i>
+                                          </button>
+                                      </td>
+                                      <td>
+                                            <button  class="btn-success"
+                                                      (click)="Edit(item,i,'I')"
+                                              data-toggle="modal" data-target=".bd-example-modal-lg" >
+                                            <i class="material-icons">note_add</i></button>
+                                      </td>
+                                  <!---  </form>------------>
+                                </tr>
+
+                            </tbody>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                 <input  type="submit" value="Guardar"   (click)="GuardaTodo()" class="btn btn-success" >
+                                  <!---<input type="button" value="Atras"   (click)="Atras()" class="btn btn-success" >--->
+
+                                  <a class="btn btn-danger"  (click)="Atras()">
+                                      <i class="material-icons">keyboard_backspace</i>
+                                  </a>
+                                </div>
+                          </div>
+                        </table>
+                    </div>
+
+  <!----------------------</form>--------------------------Fin de la tabla ------------------------------------------------>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!----------------------------------------------------- Modal Profesores ------------------------------------>
+
+
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
+  <div   class="modal-dialog modal-lg" role="document">
+    <div  class="modal-content">
+      <div class="modal-header">
+        <h5  class="modal-title" id="exampleModalLongTitle">LECCIONARIO DIARIO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+  <form  #registerForm="ngForm" (ngSubmit)="GuardarLeccionario(accionDocente)">
+  <div  class="modal-body">
+
+<!------------------------#employeeForm="ngForm" (ngSubmit)="onSubmit(employeeForm)"------------------------------------------------------------------>
+ <div >
+    <div class="row">
+   <div class="col-6 col-sm-3">
+       <p class="category">Selecione Un Horario:
+         <select #hora="ngModel" name="hora"  [(ngModel)]="MLeccionarioDocente.cod_hora"  >
+         <option *ngFor="let horario of _LeccionarioServices.HorariosList" [value]="horario.cod_horario">{{horario.descripcion}}</option>
+         </select>
+   </div>
+    </div>
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="form-group">
+                    <label>DETREZA CON CRITERIOS DE DESEPEÑO</label>
+                      <div class="form-group form-black label-floating is-empty">
+                          <textarea class="form-control"  name="destrezas" #destrezas="ngModel"  [(ngModel)]="MLeccionarioDocente.destrezas" rows="3" ></textarea>
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="form-group">
+                    <label>TAREAS</label>
+                      <div class="form-group form-black label-floating is-empty">
+                          <textarea class="form-control" name="tareas" #tareas="ngModel"  [(ngModel)]="MLeccionarioDocente.tareas" rows="3"></textarea>
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="col-md-6">
+                  <div class="form-group">
+                     <label>OBSERVACIONES</label>
+                      <div class="form-group form-black label-floating is-empty">
+
+                          <textarea class="form-control"  name="observaciones" #observaciones="ngModel"  [(ngModel)]="MLeccionarioDocente.observaciones" rows="3"></textarea>
+                      </div>
+                  </div>
+              </div>
+             <div class="col-md-6">
+                    <div class="form-group">
+                     <label>Firma</label>
+                     <div class="checkbox">
+                       <label>
+                           <input type="checkbox"  name="firmado" #firmado="ngModel" [(ngModel)]="MLeccionarioDocente.firmado" >
+                         </label>
+                     </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      </div>
+      <!--------------------------footer-------------------------------------------------------->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+        <button  type="submit" #guardarModal class="btn btn-success" (ngClik)="GuardarLeccionario(accionDocente)">Guardar</button>
+      </div>
+
+    </form>
+
+    </div>
+  </div>
+</div>

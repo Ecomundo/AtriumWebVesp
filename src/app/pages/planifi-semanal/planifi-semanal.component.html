@@ -1,0 +1,450 @@
+<div *ngIf="visible" class="main-content">
+    <div class="container-fluid">
+      <div class="card-content table-responsive">
+          <div class="row">
+            <div class="col-md-12">
+
+                    <div class="card-header ex1">
+                      <div *ngFor="let i of _MateriasDocentesServices.MateriasDocentesList">
+
+                        <button class="btn btn-danger btn-block"  (click)="Cambiamodal(i)">{{i.Dm}} {{i.Dca}} {{i.Dp}}</button>
+
+                      </div>
+                    </div>
+
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div *ngIf="!visible" class="main-content" >
+    <div class="container-fluid" >
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+<!------------------------------------------------Cabecera de la tabla------------------------------------------------>
+                    <div class="card-header" >
+                      <div class="row">
+                        <div class="col-sm-12">
+
+                            <div class="row no-gutters">
+                              <h4 class="title col-md-3">Planificación Semanal</h4>
+                              <h4 class="title  col-md-6  text-center"></h4>
+                              <div class="title  col-md-3 text-center">REG 2.4.1-4b <br> Año Lectivo 2018-2019</div>
+                            </div>
+                          <div class="row">
+
+                          </div>
+                          <div class="row">
+                            <div class="col-md-4">
+                               <p class="category">DOCENTE : <a class="contenido">{{nombre}}</a>
+
+                                 <div class="form-group form-black label-floating is-empty">
+                                   <!-- vista como Administrador--->
+                                     <a *ngIf="bandera==='A'" class="contenido">{{planificacionCabeceraModel.t_unidad}}</a>
+                                     <!-- vista como Profesor--->
+                                     <label *ngIf="bandera==='P'">Título de unidad de planificación</label>
+                                     <input *ngIf="bandera==='P'" type="text" #titulo="ngModel" name="titulo" [(ngModel)]="planificacionCabeceraModel.t_unidad"  class="form-control cabecera"  >
+                                 </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <p class="category">Asignatura : <a class="contenido">{{materia}}</a>
+
+                            </div>
+                            <div class="col-md-3">
+                                <p class="category">Pralelo : <a class="contenido">{{paralelo}}</a>
+
+                            </div>
+                              <div class="col-md-3">
+                                    <p class="category">Curso : <a class="contenido">{{curso}}</a>
+
+                              </div>
+                          </div>
+                        </div>
+                    </div>
+                    </div>
+  <!--------------------------  <form #registerForm="ngForm" (ngSubmit)="onSubmiLeccionario()"  >----------------------Comienzo de la tabla ------------------------------------------------>
+
+                    <div class="card-content table-responsive" >
+                      <div class="row">
+                        <div *ngIf="bandera==='P'" class="col-md-3">
+                          <p class="category">Fecha de Inicio:
+                             <input class="form-control"  [ngModel]="fechain | date:'yyyy-MM-dd'" (ngModelChange)="fechain = $event" (change)="fecha()" type="date" name="fecha_ini">
+                          </div>
+                        <div *ngIf="bandera==='P'" class="col-md-3">
+                          <p class="category">Fecha de término:
+                            <input class="form-control"  [ngModel]="fechafin | date:'yyyy-MM-dd'" (ngModelChange)="fechafin = $event" (change)="fecha()" type="date" name="fecha_fin">
+                          </div>
+
+                          <div class="col-6 col-sm-3">
+
+
+                              <p class="category">Selecione la Unidad:
+                                <select #Unidad="ngModel" name="Unidad"  [(ngModel)]="planificacionCabeceraModel.unidad" (change)="ConsultaAdmin()"  >
+                                <option *ngFor="let unidad of _MateriasDocentesServices.UnidadesList" [ngValue]="unidad.cod_unidad">{{unidad.des_unidad}}</option>
+                                </select>
+
+                          </div>
+
+                          <div class="col-sm-3">
+                            <!-- Button trigger modal -->
+                            <a *ngIf="bandera==='P' && planificacionCabeceraModel.enviado===0" class="btn btn-success"   (click)="insertaCabcera()" data-toggle="modal" data-target="#bd-example-modal-lg" ><i class="material-icons">note_add</i> <span>Añadir</span></a>
+                              <a  class="btn btn-success"   (click)="ConsultaAdmin()"><i class="material-icons">search</i> <span>Consulta</span></a>
+                              <a *ngIf="bandera==='P'" class="btn"  (click)="GeneraPDF('a')">
+                                <i class="material-icons">picture_as_pdf</i>
+                              </a>
+                             </div>
+                        </div>
+
+
+<!---------------------------------------------------------------------------------->
+
+                        <table  *ngIf="bandera==='P'"  class="table">
+                            <thead class="text-danger">
+                                <tr>
+                                  <th>DESTREZA CON CRITERIOS DE DESEMPEÑO</th>
+                                    <th>ACTIVIDADES DE APRENDIZAJE</th>
+                                    <th>RECURSOS</th>
+                                    <th>EVALUACIÓN</th>
+                                    <th>TAREAS</th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody >
+
+
+
+                           <tr   *ngFor="let item of _PlanificacionServices.ListPlanificacion; let i=index ">
+
+                                          <td>{{item.destrezas}}</td>
+                                          <td><strong>Anticipacion:</strong> {{item.act1}}<br>
+                                              <strong>Construcción:</strong> {{item.act2}} <br>
+                                              <strong>Consolidacion:</strong>{{item.act3}}
+                                          </td>
+                                          <td>{{item.recursos}}</td>
+                                          <td>{{item.evaluacion}}</td>
+                                          <td>{{item.tareas}}</td>
+                                          <td>
+                                           <!----------- vista como Profesor----------------->
+                                            <button  class="btn-info"
+                                                          (click)="Edit(item,i)"
+                                                          data-toggle="modal" data-target="#bd-example-modal-lg">
+                                                         <i class="fa fa-edit"></i>
+                                                </button>
+                                            <button *ngIf="bandera==='P'" class="btn-danger"
+                                                         (click)="delete(item.cod_deta,i)">
+                                                         <i class="fa fa-minus"></i>
+                                              </button>
+                                          </td>
+
+                              </tr>
+
+
+                            </tbody>
+                      </table>
+      <!----------------------</form>--------------------------Fin de la tabla ------------------------------------------------>
+
+ <!-------------------------------------------Vista como Inspector-------------------------------------------------------------->
+      <table  *ngIf="bandera==='A'"  class="table">
+          <thead class="text-danger">
+              <tr>
+                <th>TÍtulo</th>
+                  <th>Fecha Inicio</th>
+                  <th>Fecha Fin</th>
+                  <th> Revisado</th>
+                    <th> Aprobado</th>
+                  <th>Observación</th>
+                    <th>Genera PDF</th>
+
+              </tr>
+          </thead>
+
+          <tbody >
+
+
+
+         <tr  *ngFor="let item of _PlanificacionServices.ListDetallePlanAdmin; let i=index "  >
+
+                        <td>{{item.t_unidad}} </td>
+                        <td>{{item.fecha_ini}}</td>
+                        <td>{{item.fecha_fin}}</td>
+                        <td>
+                          <div class="checkbox">
+                            <label>
+                                <input type="checkbox"  [(ngModel)]="item.revisado"  >
+                              </label>
+                            </div>
+                        </td>
+                        <td>
+                          <div class="checkbox">
+                            <label>
+                                <input type="checkbox" [(ngModel)]="item.aprobado"  >
+                              </label>
+                            </div>
+                        </td>
+                        <td>
+
+                          <button  class="btn-info"
+                                            (click)="EditAdmin(item,i)"
+                                         data-toggle="modal" data-target="#Admin-modal-lg">
+                                       <i class="fa fa-edit"></i>
+                              </button>
+                          </td>
+                        <td>
+                              <a class="btn"  (click)="GeneraPDF(i)">
+                                <i class="material-icons">picture_as_pdf</i>
+                              </a>
+                        </td>
+                        <td>
+                        <a  class="btn btn-success"  (click)="Enviar(i)">
+                             <i class="material-icons">email</i>
+                         </a>
+                        </td>
+
+            </tr>
+
+
+          </tbody>
+    </table>
+
+
+<!------------------------------------------------------------------------------------------------->
+                            <div class="row">
+
+<!-----------------------------------------Vista como Profesor------------------------------------------->
+                              <div  *ngIf="bandera==='P'">
+                                <div   class="col-md-6">
+                                    <div class="form-group form-black label-floating is-empty">
+                                        <label>Especificación de la necesidad educativa</label>
+                                        <input  type="text"  #necesidad="ngModel" name="necesidad" [(ngModel)]="planificacionCabeceraModel.necesidad_educativa" class="form-control" >
+                                    </div>
+                                </div>
+                                <div  class="col-md-6">
+                                    <div class="form-group form-black label-floating is-empty">
+                                        <label>Especificación de la adaptación aplicada</label>
+                                        <input type="text"  #adaptacion="ngModel" name="adaptacion" [(ngModel)]="planificacionCabeceraModel.adaptacion_aplicada" class="form-control" >
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                   <p class="category">Observaciones :
+                                     <a class="contenido">{{planificacionCabeceraModel.observaciones}}</a>
+                                </div>
+
+
+
+
+                                <div class="col-md-6">
+                                        <label class="control-label">Revisado:</label>
+                                         <a class="contenido">{{planificacionCabeceraModel.usuario_revisor}}</a>
+                                         <div class="checkbox">
+                                           <label>
+                                               <input type="checkbox" [disabled]="bandera==='P'" [(ngModel)]="planificacionCabeceraModel.revisado">
+                                             </label>
+                                           </div>
+                                </div>
+                                <div class="col-md-6">
+                                        <label class="control-label">Aprobado:</label>
+                                         <a class="contenido">{{planificacionCabeceraModel.usuario_aprueba}}</a>
+                                         <div class="checkbox">
+                                           <label>
+                                               <input type="checkbox" [disabled]="bandera==='P'" [(ngModel)]="planificacionCabeceraModel.aprobado">
+                                             </label>
+                                           </div>
+                                </div>
+                              </div>
+                            </div>
+
+
+
+
+
+
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                          <div class="row">
+                              <div class="col-md-12">
+                                <a class="btn btn-danger"  (click)="Atras()">
+                                     <i class="material-icons">keyboard_backspace</i>
+                                 </a>
+                               <input type="submit" #guardaTodo value="Guardar"   (click)="GuardaTodo(bandera)" class="btn btn-success" disabled >
+                               <a *ngIf="bandera==='P'" class="btn btn-success"  (click)="Enviar()">
+                                    <i class="material-icons">email</i>
+                                </a>
+
+                               <div *ngIf="bandera==='P'" class="">
+                                 <p class="category">Duplicar en Paralelo :
+                                   <select #Paralelo="ngModel" name="Paralelo"  [(ngModel)]="planificacionCabeceraModel.cod_paralelo_duplicado"  >
+                                   <option *ngFor="let paralelo of Paralelos" [value]="paralelo.cod_paralelo">{{paralelo.des_paralelo}}</option>
+                                   </select>
+                               </div>
+                                <input  *ngIf="bandera==='P'" type="submit" #guardaDuplica value="Duplica"  (click)="Duplica()"   class="btn btn-success" disabled >
+
+                              </div>
+
+                        </div>
+
+                         </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!----------------------------------------------------- Modal Profesores ------------------------------------>
+
+
+
+<div class="modal fade" id="bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="bd-example-modal-lg" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
+  <div   class="modal-dialog modal-lg" role="document">
+    <div  class="modal-content">
+      <div class="modal-header">
+        <h5  class="modal-title" id="exampleModalLongTitle">Planificación Semanal</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+  <form  #registerForm="ngForm" (ngSubmit)="guardar(registerForm)">
+  <div  class="modal-body">
+  <div *ngIf="!bloquedoModal">
+    <div  class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+               <h5>Debes selecionar la unidad ;) !  </h5>
+            </div>
+        </div>
+
+    </div>
+
+  </div>
+<!------------------------#employeeForm="ngForm" (ngSubmit)="onSubmit(employeeForm)"------------------------------------------------------------------>
+ <div *ngIf="bloquedoModal">
+          <div  class="row">
+              <div class="col-md-6">
+                  <div class="form-group">
+                     <label>DESTREZA CON CRITERIOS DE DESEMPEÑO</label>
+                      <div class="form-group form-black label-floating is-empty">
+
+                          <textarea class="form-control" name="destrezas" #destrezas="ngModel"  [(ngModel)]="planificacionDetalleModel.destrezas" rows="3"></textarea>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                     <label>RECURSOS</label>
+                      <div class="form-group form-black label-floating is-empty">
+
+                          <textarea class="form-control" name="recursos"  #recursos="ngModel"  [(ngModel)]="planificacionDetalleModel.recursos" rows="3"></textarea>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="form-group">
+                    <label>ACTIVIDADES DE APRENDIZAJE</label>
+                      <div class="form-group form-black label-floating is-empty">
+                          <label >Anticipación</label>
+                          <textarea class="form-control" #anticipacion="ngModel" name="anticipacion" [(ngModel)]="planificacionDetalleModel.act1" rows="4"></textarea>
+                      </div>
+                      <div class="form-group form-black label-floating is-empty">
+                          <label >Construcción</label>
+                          <textarea class="form-control"   #construcion="ngModel" name="construcion" [(ngModel)]="planificacionDetalleModel.act2" rows="4"></textarea>
+                      </div>
+                      <div class="form-group form-black label-floating is-empty">
+                          <label >Consolidación</label>
+                          <textarea class="form-control"   #consolidacion="ngModel" name="consolidacion" [(ngModel)]="planificacionDetalleModel.act3" rows="4"></textarea>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="col-md-6">
+                  <div class="form-group">
+                     <label>EVALUACIÓN</label>
+                      <div class="form-group form-black label-floating is-empty">
+
+                          <textarea class="form-control"   #evaluacion="ngModel" name="evaluacion" [(ngModel)]="planificacionDetalleModel.evaluacion" rows="3"></textarea>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                     <label>TAREAS</label>
+                      <div class="form-group form-black label-floating is-empty">
+
+                          <textarea class="form-control"  #tareas="ngModel" name="tareas" [(ngModel)]="planificacionDetalleModel.tareas" rows="3"></textarea>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      </div>
+      <!--------------------------footer-------------------------------------------------------->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+        <button type="submit" #guardarModal class="btn btn-success" (ngClik)="guardar()">Guardar</button>
+      </div>
+
+    </form>
+
+    </div>
+  </div>
+</div>
+
+
+<!----------------------------------------------------- Modal Inspector ------------------------------------>
+
+
+
+<div class="modal fade" id="Admin-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
+  <div   class="modal-dialog" role="document">
+    <div  class="modal-content">
+      <div class="modal-header">
+        <h5  class="modal-title" id="exampleModalLongTitle">Detalles Observacion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+
+  <div  class="modal-body">
+
+<!------------------------#employeeForm="ngForm" (ngSubmit)="onSubmit(employeeForm)"------------------------------------------------------------------>
+
+                <div class="row">
+              <div class="col-md-12">
+                  <div class="form-group">
+                      <div class="form-group form-black label-floating is-empty">
+                          <label >Observacion</label>
+                          <textarea class="form-control" #observacion="ngModel"  name="observacion" [(ngModel)]="ObservacionAdmin"></textarea>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+
+      </div>
+      <!--------------------------footer-------------------------------------------------------->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+        <button type="submit" #guardarModal class="btn btn-success" (click)="GuardarModalAdmin()">Guardar</button>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
