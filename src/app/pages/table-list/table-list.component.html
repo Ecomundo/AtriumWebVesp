@@ -130,13 +130,14 @@
     <!-- <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()">-->
 
 
-   <td> {{item.nombre}}</td>
-   <td *ngIf="item.asistencia===true"> 1</td>
-   <td *ngIf="item.asistencia > 1"> {{item.asistencia}}</td>
-   <td>{{item.abandono}}</td>
-   <td>{{item.atraso}}</td>
-    <td>{{item.retiro}}</td>
-   <td>{{item.falta}}</td>
+    <td> {{item.nombre}}</td>
+    <td *ngIf="item.asistencia===true"> 1</td>
+    <td *ngIf="item.asistencia > 1"> {{item.asistencia}}</td>
+    <td *ngIf="item.asistencia < 1">{{item.asistencia}}</td>
+    <td>{{item.abandono}} </td>
+    <td>{{item.atraso}} </td>
+     <td>{{item.retiro}} </td>
+    <td>{{item.falta}} </td>
 
    <td >
               <div class="checkbox">
@@ -202,7 +203,7 @@
          <div *ngFor="let item of detallesMaterias;">
                  <p class="categoryDetalle">Materia : <label class="contenido">{{item.materia}}</label>
                   <p class="categoryDetalle">Docente : <label class="contenido">{{item.profesor}}</label>
-                  <p class="categoryDetalle">Tipo : <label class="contenido">{{item.tipo_falta}}</label>
+                  <p class="categoryDetalle">Tipo : <label class="contenido" *ngIf="item.tipo_falta">{{item.tipo_falta}}</label> <label class="contenido" *ngIf="!item.tipo_falta">asistencia</label>
            <hr>
          </div>
 
