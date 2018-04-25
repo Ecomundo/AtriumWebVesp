@@ -34,7 +34,7 @@ export class TableListComponent implements OnInit {
   detallesMaterias:Array<any>;
    swal: SweetAlert = _swal as any;
   ////
-  prueba:Array<any>;
+
 
   constructor(private _MateriasDocentesServices: MateriasDocenteService,  private datePipe: DatePipe,) {
 
@@ -54,10 +54,7 @@ export class TableListComponent implements OnInit {
      this.user=localStorage.getItem('username');
      this.bandera=localStorage.getItem('bandera');
      this.codProfesor=localStorage.getItem('cod_profesor')
-     this.prueba=[  { name: "Falta", valor:1},
-                     { name: "Atraso", valor:2},
-                     { name: "Retirado",valor:3},
-                     { name: "Abandono", valor:4}];
+
 
   }
 
@@ -115,7 +112,8 @@ export class TableListComponent implements OnInit {
    this.faltas =[  { name: "Falta", valor:1},
                    { name: "Atraso", valor:2},
                    { name: "Retirado",valor:3},
-                   { name: "Abandono", valor:4}];
+                   { name: "Abandono", valor:4},
+                   { name: "N/A", valor:5}]; 
 
 
    this.Cabecera=[{
