@@ -98,7 +98,7 @@ export class TableListComponent implements OnInit {
               if(this.faltasAtraso[i].tipo_falta==5)
                 {
                   this.faltasAtraso[i].tipo_falta=0;
-              s
+              
                 }
 
               }
