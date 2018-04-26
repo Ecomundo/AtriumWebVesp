@@ -109,11 +109,21 @@ export class TableListComponent implements OnInit {
         }
 
   Cambiamodal(i){
-   this.faltas =[  { name: "Falta", valor:1},
-                   { name: "Atraso", valor:2},
-                   { name: "Retirado",valor:3},
-                   { name: "Abandono", valor:4},
-                   { name: "N/A", valor:5}]; 
+      if(this.bandera ==="A"){
+        this.faltas =[  { name: "Falta", valor:1},
+                        { name: "Atraso", valor:2},
+                        { name: "Retirado",valor:3},
+                        { name: "Abandono", valor:4}];
+
+      }
+      else{
+        this.faltas =[  { name: "Falta", valor:1},
+                        { name: "Atraso", valor:2},
+                        { name: "Retirado",valor:3},
+                        { name: "Abandono", valor:4},
+                        { name: "N/A", valor:5}];
+      }
+
 
 
    this.Cabecera=[{
@@ -172,6 +182,7 @@ DetalleAlum(codAlumno){
             .subscribe(response => {
 
                   this.detallesMaterias = response;
+
                 ////llenar arreglo
             },
             error=>{
