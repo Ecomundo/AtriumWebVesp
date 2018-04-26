@@ -64,7 +64,6 @@ export class TableListComponent implements OnInit {
             {
                this._MateriasDocentesServices.AlumnCursosList.map((elemen)=>{
                     if(elemen.tipo_falta==0){
-
                     //  alert(`Debe selecionar un tipo de falta al alumno: ${elemen.nombre}`)
                         nombres.push(elemen.nombre)
                       Tipofalta++;
@@ -80,6 +79,7 @@ export class TableListComponent implements OnInit {
       }
 
         GuardaFaltas(){
+
           this.faltasAtraso=this._MateriasDocentesServices.AlumnCursosList
           for (let i in this.faltasAtraso) {
              this.faltasAtraso[i].cod_per =  this.codigoPeriodo;
@@ -92,9 +92,16 @@ export class TableListComponent implements OnInit {
              this.faltasAtraso[i].cod_profesor=this.AlumnosCurso[0].cod_profesor;
              this.faltasAtraso[i].usuario=this.user.trim();
              this.faltasAtraso[i].justifica= (this.faltasAtraso[i].justifica)? 1:0 ;
-             this.faltasAtraso[i].asistencia= (this.faltasAtraso[i].asistencia)? 1:0 ;
-             if(this.faltasAtraso[i].tipo_falta==5)
-                {  this.faltasAtraso[i].tipo_falta=0;}
+             if(this.bandera ==="P")
+             {
+              this.faltasAtraso[i].asistencia= (this.faltasAtraso[i].asistencia)? 1:0 ;
+              if(this.faltasAtraso[i].tipo_falta==5)
+                {
+                  this.faltasAtraso[i].tipo_falta=0;
+              s
+                }
+
+              }
           }
 
 
