@@ -93,6 +93,8 @@ export class TableListComponent implements OnInit {
              this.faltasAtraso[i].usuario=this.user.trim();
              this.faltasAtraso[i].justifica= (this.faltasAtraso[i].justifica)? 1:0 ;
              this.faltasAtraso[i].asistencia= (this.faltasAtraso[i].asistencia)? 1:0 ;
+             if(this.faltasAtraso[i].tipo_falta==5)
+                {  this.faltasAtraso[i].tipo_falta=0;}
           }
 
 
