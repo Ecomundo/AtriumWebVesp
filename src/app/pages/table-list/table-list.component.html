@@ -87,7 +87,7 @@
                         <table class="table">
                             <thead class="text-danger">
                                 <tr>
-
+                                    <th *ngIf="this.bandera==='P'"></th>
                                     <th>Alumno</th>
                                     <th>Asistencia</th>
                                     <th *ngIf="this.bandera==='P'"> Tipo</th>
@@ -106,7 +106,7 @@
                                 <tr *ngFor="let item of this._MateriasDocentesServices.AlumnCursosList; let in = index">
                                 <!-- <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()">-->
 
-
+                                <td> {{in+1}}</td>
                                <td> {{item.nombre}}</td>
                                <td >
                                           <div class="checkbox">

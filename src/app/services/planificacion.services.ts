@@ -142,6 +142,30 @@ export class PlanificacionServices{
       return this._http.post(this.url+'InsertDuplica', params ,{headers: headers})
                .map(res => res.json());
     }
+
+
+
+    ConsultaPlanTodos(detalle){
+      let cod_plan
+      let json = JSON.stringify(detalle);
+      let params =json;
+     let headers = new Headers({'Content-Type':'application/json',
+                                     'Authorization': 'bearer '+this.getToken()});
+      return this._http.post(this.url+'ConsultaTodosPlanDocente', params ,{headers: headers})
+               .map(res =>{
+                    return res.json();
+                 });
+    }
+
+    deletePlan(detalle){
+      let json = JSON.stringify(detalle);
+      let params =json;
+
+         let headers = new Headers({'Content-Type':'application/json',
+                                     'Authorization': 'bearer '+this.getToken()});
+      return this._http.post(this.url+'DeletePlan', params ,{headers: headers})
+               .map(res => res.json());
+    }
 ///Accede a local Sotrage y devuele los datos ya procesados
     getToken(){
        let token = localStorage.getItem('token');

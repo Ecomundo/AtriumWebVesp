@@ -120,11 +120,9 @@ public MLeccionarioDocente:ModelLeccionarioDocente;
           Itemplan.fecha_inspector="";
           Itemplan.usuario_coordinador="";
           Itemplan.usuario_inspector="";
-          this.MLeccionarioDocente=Itemplan;
-      //    this.MLeccionarioDocente=
-      //    console.log(this.MLeccionarioDocent)
-          //this.MLeccionarioDocente.cod_profesor=416
-            this.indexEditLecionario=i;
+          this.MLeccionarioDocente=  Object.assign({}, this.MLeccionarioDocente , Itemplan );////Quita el biding
+          if(accion==="I") this.MLeccionarioDocente.firmado=false;
+          this.indexEditLecionario=i;
           }
     GuardarLeccionario(modal:string="N"){
 
@@ -136,10 +134,7 @@ public MLeccionarioDocente:ModelLeccionarioDocente;
       })
       this.MLeccionarioDocente.usuario=this.user;
       if(modal==="I") this.MLeccionarioDocente.cod_leccionario=0;
-    /*  this.MLeccionarioDocente.usuario.map((elemen)=>{
-           if(elemen.usuario!=null)  this.MLeccionarioDocente.usuario=this.user;
-      })*/
-      //  this.MLeccionarioDocente.cod_hora=this.descriphora;
+
         this._LeccionarioServices.InsertaLeccionario(this.MLeccionarioDocente).subscribe(
                    response=>{
 

@@ -67,7 +67,7 @@
                         </div>
                     </div>
                     </div>
-  <!--------------------------  <form #registerForm="ngForm" (ngSubmit)="onSubmiLeccionario()"  >----------------------Comienzo de la tabla ------------------------------------------------>
+  <!------------------------------------------------Comienzo de la tabla ------------------------------------------------>
 
                     <div class="card-content table-responsive" >
                       <div class="row">
@@ -92,8 +92,9 @@
 
                           <div class="col-sm-3">
                             <!-- Button trigger modal -->
-                            <a *ngIf="bandera==='P' && planificacionCabeceraModel.enviado===0" class="btn btn-success"   (click)="insertaCabcera()" data-toggle="modal" data-target="#bd-example-modal-lg" ><i class="material-icons">note_add</i> <span>Añadir</span></a>
-                              <a  class="btn btn-success"   (click)="ConsultaAdmin()"><i class="material-icons">search</i> <span>Consulta</span></a>
+                            <a  class="btn btn-info"   (click)="ConsultaAdmin()"><i class="material-icons">search</i> <span>Consulta</span></a>
+                            <a *ngIf="bandera==='P'" class="btn btn-success"   (click)="insertaCabcera()" data-toggle="modal" data-target="#bd-example-modal-lg" ><i class="material-icons">note_add</i> <span>Añadir</span></a>
+                              <a *ngIf="bandera==='P'" class="btn btn-info"   (click)="ConsultaTodosPlan()" data-toggle="modal" data-target="#bd-example-modal-verPlanes" ><i class="material-icons">search</i> <span>Ver Planes</span></a>
                               <a *ngIf="bandera==='P'" class="btn"  (click)="GeneraPDF('a')">
                                 <i class="material-icons">picture_as_pdf</i>
                               </a>
@@ -101,7 +102,7 @@
                         </div>
 
 
-<!---------------------------------------------------------------------------------->
+<!-------------------------------------------- vista como Profesor-------------------------------------->
 
                         <table  *ngIf="bandera==='P'"  class="table">
                             <thead class="text-danger">
@@ -130,15 +131,15 @@
                                           <td>{{item.evaluacion}}</td>
                                           <td>{{item.tareas}}</td>
                                           <td>
-                                           <!----------- vista como Profesor----------------->
-                                            <button  class="btn-info"
+
+                                            <button  class="btn-success btn-simple btn-xs"
                                                           (click)="Edit(item,i)"
                                                           data-toggle="modal" data-target="#bd-example-modal-lg">
                                                          <i class="fa fa-edit"></i>
                                                 </button>
-                                            <button *ngIf="bandera==='P'" class="btn-danger"
+                                            <button *ngIf="bandera==='P'" class="btn-danger btn-simple btn-xs"
                                                          (click)="delete(item.cod_deta,i)">
-                                                         <i class="fa fa-minus"></i>
+                                                          <i class="fa fa-times"></i>
                                               </button>
                                           </td>
 
@@ -147,7 +148,7 @@
 
                             </tbody>
                       </table>
-      <!----------------------</form>--------------------------Fin de la tabla ------------------------------------------------>
+  <!--------------------------------------------------Fin de la tabla ------------------------------------------------>
 
  <!-------------------------------------------Vista como Inspector-------------------------------------------------------------->
       <table  *ngIf="bandera==='A'"  class="table">
@@ -285,6 +286,8 @@
                                </div>
                                 <input  *ngIf="bandera==='P'" type="submit" #guardaDuplica value="Duplica"  (click)="Duplica()"   class="btn btn-success" disabled >
 
+
+                                <input  *ngIf="bandera==='P'" type="button"  value="Elimina Plan"   (click)="DeletePlan(bandera)" class="btn btn-warning"  >
                               </div>
 
                         </div>
@@ -300,10 +303,60 @@
 
 
 
-<!----------------------------------------------------- Modal Profesores ------------------------------------>
+<!-----------------------------------------------------Modal Profesores------------------------------------>
+<!-- Modal 1 ver todos los planes -->
+<div class="modal fade" id="bd-example-modal-verPlanes" tabindex="-1" role="dialog" aria-labelledby="bd-example-modal-verPlanes" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Todos los Planes</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div *ngIf="planificacionCabeceraModel.unidad==0" class="">
+          No ha selecionado la unidad
+      </div>
+     <!---------------------------------------------------------------------->
+     <table *ngIf="planificacionCabeceraModel.unidad!=0"  class="table">
+         <thead class="text-danger">
+             <tr>
+               <th>TÍtulo</th>
+                 <th>Fecha Inicio</th>
+                 <th>Fecha Fin</th>
+
+             </tr>
+         </thead>
+
+         <tbody >
 
 
 
+        <tr  *ngFor="let item of todosPlanes; let i=index "  >
+
+                       <td>{{item.t_unidad}} </td>
+                       <td>{{item.fecha_ini}}</td>
+                       <td>{{item.fecha_fin}}</td>
+           </tr>
+
+
+         </tbody>
+   </table>
+
+
+
+      <!---------------------------------------------------------------------->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-------------------------------------------------------------------------------------------------------------->
 <div class="modal fade" id="bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="bd-example-modal-lg" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
   <div   class="modal-dialog modal-lg" role="document">
     <div  class="modal-content">

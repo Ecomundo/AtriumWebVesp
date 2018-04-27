@@ -46,6 +46,7 @@ export class PlanifiSemanalComponent implements OnInit {
   curso:string;
   errorCabecera: Array<any>;
   Paralelos: Array<any>;
+  todosPlanes: Array<any>;
    swal: SweetAlert = _swal as any;
   constructor(public _PlanificacionServices: PlanificacionServices,
               private _MateriasDocentesServices: MateriasDocenteService,
@@ -149,9 +150,14 @@ export class PlanifiSemanalComponent implements OnInit {
 
 
     ConsultaAdmin(){
-
-  this.planificacionCabeceraModel.fecha_ini =this.fechain;
-  this.planificacionCabeceraModel.fecha_fin =this.fechafin;
+      if(this.planificacionCabeceraModel.unidad===0)
+      {
+       swal(`No ha seleccionado la unida -.-`,"", "warning")//
+      }
+      else
+     {
+       this.planificacionCabeceraModel.fecha_ini =this.fechain;
+        this.planificacionCabeceraModel.fecha_fin =this.fechafin;
 
        if(this.bandera==='A'){
           this._PlanificacionServices.ConsultaPlanAdmin(this.planificacionCabeceraModel);
@@ -192,8 +198,24 @@ export class PlanifiSemanalComponent implements OnInit {
              this.renderer.removeAttribute(this.guardaTodo.nativeElement, "disabled");
           }
 
-
+        }
     }
+
+
+      ConsultaTodosPlan(){
+        if(this.planificacionCabeceraModel.unidad!=0)
+        {
+          this.planificacionCabeceraModel.fecha_ini =this.fechain;
+          this.planificacionCabeceraModel.fecha_fin =this.fechafin;
+          this._PlanificacionServices.ConsultaPlanTodos(this.planificacionCabeceraModel)
+                        .subscribe(response=>{
+                        this.todosPlanes=response});
+        }
+
+      }
+
+
+
 
   delete(cod_deta,i){
   //  this.planificacionDetalleModel.cod_deta =cod_deta;
@@ -424,7 +446,30 @@ let ususario =(this.bandera==="A")? this._PlanificacionServices.ListDetallePlanA
 
       }
 
+        DeletePlan(){
 
+      //  console.log(this._PlanificacionServices.ListDetallePlanAdmin);
+        swal({
+          title: "¿Esta seguro de eliminar?",
+          text: "Al hacer click en Ok se eliminara ¿Esta seguo?",
+          icon: "warning",
+          buttons: {
+               cancel: true,
+               confirm: true,
+             }
+        })
+        .then(willDelete => {
+          if (willDelete) {
+                console.log(this.planificacionCabeceraModel);
+              this._PlanificacionServices.deletePlan(this.planificacionCabeceraModel).subscribe(
+                          response=>{
+
+                            this.ConsultaAdmin();
+                          },
+                          error=>{ console.log(error);});
+          }
+        });
+        }
 
 
   }
