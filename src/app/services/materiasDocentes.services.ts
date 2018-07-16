@@ -39,7 +39,7 @@ export class MateriasDocenteService{
         let json = JSON.stringify(this.GetDatosdocentes(lec));
 
         let params =json;
-        
+
         let headers = new Headers({'Content-Type':'application/json',
                                     'Authorization': 'bearer '+this.getToken()});
 
@@ -81,6 +81,19 @@ export class MateriasDocenteService{
                   this.AlumnCursosList = x;
             })
         }
+
+        ConsultaRegistrado(cursoDatos){
+              let json = JSON.stringify(cursoDatos);
+
+              let params =json;
+
+              let headers = new Headers({'Content-Type':'application/json',
+                                          'Authorization': 'bearer '+this.getToken()});
+
+              return this._http.post(this.url+'AlumnosCurso', params ,{headers: headers})
+                       .map(res => res.json());
+          }
+
 
         InsFaltasAtrasos(curso){
 

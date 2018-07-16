@@ -37,9 +37,12 @@ public MLeccionarioDocente:ModelLeccionarioDocente;
                 private datePipe: DatePipe) { }
 
   ngOnInit() {
-  this.MLeccionarioDocente= new ModelLeccionarioDocente(0,0,0,'',0,0,0,0,'','','',false,'','','',0,'', 0,'','','','','','','');
-    this.fecha =moment().format('L');   //
-      this.fechafin=moment().format('L');   //
+  this.MLeccionarioDocente= new ModelLeccionarioDocente(0,0,0,'',0,0,0,0,'','','',false,'','','',0,'', 0,'','','','','','','','');
+
+
+      this.fecha  =this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+      this.fechafin =this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+
     this._MateriasDocentesServices.MateriasDocentes('L');
     this._MateriasDocentesServices.UnidadesDocentes();
     this._LeccionarioServices.HorariosDocentes();
@@ -64,6 +67,8 @@ public MLeccionarioDocente:ModelLeccionarioDocente;
                      inspector:i.inspector,
                 }];
     this.visible=false;
+    this.fecha  =this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    this.fechafin =this.datePipe.transform(new Date(), 'yyyy-MM-dd');
 
   }
         ConsultaLecionario(accion){
@@ -103,7 +108,7 @@ public MLeccionarioDocente:ModelLeccionarioDocente;
                  this._LeccionarioServices.LeccionarioDocenteList[i].estado="E";
                 this._LeccionarioServices.InsertaLeccionario(this._LeccionarioServices.LeccionarioDocenteList[i]).subscribe(
                             response=>{
-                                this._LeccionarioServices.LeccionarioDocenteList.splice(i, 1);
+                                 this.ConsultaLecionario(this.bandera);
                             },
                             error=>{ console.log(error);});
             }
@@ -138,8 +143,8 @@ public MLeccionarioDocente:ModelLeccionarioDocente;
         this._LeccionarioServices.InsertaLeccionario(this.MLeccionarioDocente).subscribe(
                    response=>{
 
-                     if(response.length>0)
-                      {  if(this.accionDocente==="u")
+
+                         if(this.accionDocente==="u")
                          {
                          this.ConsultaLecionario(this.bandera);
 
@@ -151,7 +156,7 @@ public MLeccionarioDocente:ModelLeccionarioDocente;
 
                          }
 
-                      }
+
 
                    },
                    error=>{ console.log(error);});
@@ -171,7 +176,7 @@ public MLeccionarioDocente:ModelLeccionarioDocente;
 
       this._LeccionarioServices.InsertaLeccionarioArreglo(this.DatosLecionarioDocen).subscribe(
                  response=>{
-
+              //      console.log(this.DatosLecionarioDocen);
                        swal("Leccionario!", "Guardo correctamente :) con exito!", "success");
 
                  },
@@ -181,7 +186,7 @@ public MLeccionarioDocente:ModelLeccionarioDocente;
  GeneraPDF(i){
 
 //  this._LeccionarioServices.LeccionarioInspectorList[i].fecha =this.datePipe.transform(this._LeccionarioServices.LeccionarioInspectorList[i].fecha, 'yyyy-dd-MM');
-
+  console.log(this._LeccionarioServices.LeccionarioInspectorList[i]);
    this._LeccionarioServices.GeneraPDFLecionario(this._LeccionarioServices.LeccionarioInspectorList[i]).subscribe(
          (res) => {
            saveAs(res, "Leccionario.pdf"); //if you want to save it - you need file-saver for this : https://www.npmjs.com/package/file-saver
@@ -199,7 +204,8 @@ public MLeccionarioDocente:ModelLeccionarioDocente;
     this.unidad =0;
     this._LeccionarioServices.LeccionarioDocenteList=[];
     this.indexEditLecionario=0;
-
+    this.fecha  =this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    this.fechafin =this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.visible=true;
   }
 }

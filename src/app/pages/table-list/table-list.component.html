@@ -30,7 +30,7 @@
                         <div class="col-sm-12">
 
                             <div class="row no-gutters">
-                              <h4 class="title col-12 col-sm-6 col-md-8">Parte Diario de Faltas y Atrasos</h4>
+                              <h4 class="title col-12 col-sm-6 col-md-8">Reporte Diario de Faltas y Atrasos</h4>
                               <div class="title col-6 col-md-4">REG 3.2.3-06</div>
                             </div>
                           <div class="row">
@@ -61,22 +61,30 @@
                         </a>
                       </div>
 
-                      <div class="col-sm-3" *ngIf="this.bandera==='A'">
+                      <div class="col-sm-3" >
                         <p class="category" >Fecha: <br>
                          <input [ngModel]="fecha | date:'yyyy-MM-dd'" (ngModelChange)="fecha = $event" type="date" name="fecha"/>
                       </div>
 
                       <div class="col-sm-3">
                           <p class="category">Selecione la Unidad:
-                            <select #Unidad id="Unidad" (change)="ConsultarAlumnos($event.target.value)" [value]=-1>
+                            <select #Unidad="ngModel" name="Unidad"  [(ngModel)]="unidad">
                             <option *ngFor="let unidad of _MateriasDocentesServices.UnidadesList" [value]="unidad.cod_unidad">{{unidad.des_unidad}}</option>
                             </select>
-
-                            <!-- Button trigger modal -->
-                            <a  class="btn"   data-toggle="modal" data-target="#exampleModalLong" >
-                            <span>GeneraPDF</span>
+                            <a class="btn btn-success"  (click)="ConsultarAlumnos()">
+                                  <span>Consulta Alumnos</span>
                             </a>
+
                       </div>
+
+                      <div class="col-sm-3" >
+                                <h5 ><strong>{{estado}}</strong> </h5>
+                                <!-- Button trigger modal -->
+                                <a  class="btn"   data-toggle="modal" data-target="#exampleModalLong" >
+                                <span>GeneraPDF</span>
+                                </a>
+
+                        </div>
 
 
 
@@ -170,7 +178,7 @@
 <!------------------------------------------------------------------------------------------->
                             <div class="row">
                         <div class="col-md-3">
-                                 <input type="submit" value="Guardar"   (click)="onSubmiLeccionario()" class="btn btn-success" >
+                                 <input type="submit" value="Guardar"   (click)="GuardaFaltas()" class="btn btn-success" >
                                   <!---<input type="button" value="Atras"   (click)="Atras()" class="btn btn-success" >--->
   </div>
 

@@ -50,10 +50,10 @@
                                           </div>
                                       </div>
                                       </div>
-                    <!--------------------------  <form #registerForm="ngForm" (ngSubmit)="onSubmiLeccionario()"  >----------------------Comienzo de la tabla ------------------------------------------------>
+                    <!--------------------------  ----------------------Comienzo de la tabla ------------------------------------------------>
 
 
-  <!--------------------------  <form #registerForm="ngForm" (ngSubmit)="onSubmiLeccionario()"  >----------------------Comienzo de la tabla ------------------------------------------------>
+  <!------------------------------------------------Comienzo de la tabla ------------------------------------------------>
 
                     <div class="card-content table-responsive">
                       <div class="row">
@@ -73,16 +73,13 @@
                               <option *ngFor="let unidad of _MateriasDocentesServices.UnidadesList" [ngValue]="unidad.cod_unidad">{{unidad.des_unidad}}</option>
                               </select>
                         </div>
-                    <!---  <div *ngIf="bandera==='P'"  class="col-md-3">
-                        <a class="btn"  (click)="GeneraPDF()">
-                          <i class="material-icons">picture_as_pdf</i>  GeneraPDF
-                        </a>
-                      </div>-->
+                        <a  class="btn btn-info"   (click)="ConsultaLecionario(bandera)"><i class="material-icons">search</i> <span>Consulta</span></a>
+
 
 
 
                    </div>
-<!--------*ngIf="bandera==='P'"-------------------------------Vista Inspector--------------------------------------------------------------------------------->
+<!---------------------------------------Vista Inspector--------------------------------------------------------------------------------->
                             <table *ngIf="bandera==='A'" class="table">
                                                <thead class="text-danger">
                                                    <tr>
@@ -122,7 +119,7 @@
                                                    </div>
                                              </div>
                                            </table>
-<!--------*ngIf="bandera==='P'"-----------------------------Vista Profesor--------------------------------------------------------------------------------->
+<!-------------------------------------Vista Profesor--------------------------------------------------------------------------------->
                         <table class="table" *ngIf="bandera==='P'">
                             <thead class="text-danger">
                                 <tr>
@@ -138,7 +135,7 @@
                             <tbody>
 
                                 <tr *ngFor="let item of _LeccionarioServices.LeccionarioDocenteList; let i=index ">
-                                    <td>{{item.des_hora}}</td>
+                                    <td>{{item.descripcion}}</td>
                                     <td>
                                      {{item.destrezas}}
                                     </td>
@@ -222,7 +219,7 @@
    <div class="col-6 col-sm-3">
        <p class="category">Selecione Un Horario:
          <select #hora="ngModel" name="hora"  [(ngModel)]="MLeccionarioDocente.cod_hora"  >
-         <option *ngFor="let horario of _LeccionarioServices.HorariosList" [value]="horario.cod_horario">{{horario.descripcion}}</option>
+         <option *ngFor="let horario of _LeccionarioServices.HorariosList" [value]="horario.cod_horario">{{horario.horas}}</option>
          </select>
    </div>
     </div>

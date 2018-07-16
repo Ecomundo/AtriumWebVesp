@@ -25,6 +25,7 @@ export class LeccionarioServices {
   }
 
   HorariosDocentes(){
+    
      let datos={
                     cod_emp:      3,
                     cod_per:     localStorage.getItem('cod_per'),

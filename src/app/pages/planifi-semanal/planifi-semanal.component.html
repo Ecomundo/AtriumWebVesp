@@ -73,18 +73,18 @@
                       <div class="row">
                         <div *ngIf="bandera==='P'" class="col-md-3">
                           <p class="category">Fecha de Inicio:
-                             <input class="form-control"  [ngModel]="fechain | date:'yyyy-MM-dd'" (ngModelChange)="fechain = $event" (change)="fecha()" type="date" name="fecha_ini">
+                             <input  [ngModel]="fechain | date:'yyyy-MM-dd'" (ngModelChange)="fechain = $event"  type="date" name="fechain">
                           </div>
                         <div *ngIf="bandera==='P'" class="col-md-3">
                           <p class="category">Fecha de término:
-                            <input class="form-control"  [ngModel]="fechafin | date:'yyyy-MM-dd'" (ngModelChange)="fechafin = $event" (change)="fecha()" type="date" name="fecha_fin">
+                            <input  [ngModel]="fechafin | date:'yyyy-MM-dd'" (ngModelChange)="fechafin = $event"  type="date" name="fechafin">
                           </div>
 
                           <div class="col-6 col-sm-3">
 
 
                               <p class="category">Selecione la Unidad:
-                                <select #Unidad="ngModel" name="Unidad"  [(ngModel)]="planificacionCabeceraModel.unidad" (change)="ConsultaAdmin()"  >
+                                <select #Unidad="ngModel" name="Unidad"  [(ngModel)]="planificacionCabeceraModel.unidad"   >
                                 <option *ngFor="let unidad of _MateriasDocentesServices.UnidadesList" [ngValue]="unidad.cod_unidad">{{unidad.des_unidad}}</option>
                                 </select>
 
@@ -118,8 +118,6 @@
 
                             <tbody >
 
-
-
                            <tr   *ngFor="let item of _PlanificacionServices.ListPlanificacion; let i=index ">
 
                                           <td>{{item.destrezas}}</td>
@@ -130,17 +128,23 @@
                                           <td>{{item.recursos}}</td>
                                           <td>{{item.evaluacion}}</td>
                                           <td>{{item.tareas}}</td>
-                                          <td>
+                                          <td class="td-actions text-right">
 
                                             <button  class="btn-success btn-simple btn-xs"
                                                           (click)="Edit(item,i)"
                                                           data-toggle="modal" data-target="#bd-example-modal-lg">
                                                          <i class="fa fa-edit"></i>
                                                 </button>
-                                            <button *ngIf="bandera==='P'" class="btn-danger btn-simple btn-xs"
+                                            <button  class="btn-danger btn-simple btn-xs"
                                                          (click)="delete(item.cod_deta,i)">
                                                           <i class="fa fa-times"></i>
-                                              </button>
+                                            </button>
+
+                                            <button type="button" rel="tooltip" title="Lecionario" class="btn-info btn-simple btn-xs"
+                                                      (click)="CreaDias(item.cod_deta)"
+                                                      data-toggle="modal" data-target="#lecionario-modal-lg">
+                                              <i class="material-icons">chrome_reader_mode</i>
+                                            </button>
                                           </td>
 
                               </tr>
@@ -172,8 +176,8 @@
          <tr  *ngFor="let item of _PlanificacionServices.ListDetallePlanAdmin; let i=index "  >
 
                         <td>{{item.t_unidad}} </td>
-                        <td>{{item.fecha_ini}}</td>
-                        <td>{{item.fecha_fin}}</td>
+                        <td>{{item.fecha_ini | date:'yyyy-MM-dd'}}</td>
+                        <td>{{item.fecha_fin | date:'yyyy-MM-dd'}}</td>
                         <td>
                           <div class="checkbox">
                             <label>
@@ -328,25 +332,19 @@
 
              </tr>
          </thead>
-
          <tbody >
-
-
-
         <tr  *ngFor="let item of todosPlanes; let i=index "  >
 
                        <td>{{item.t_unidad}} </td>
                        <td>{{item.fecha_ini}}</td>
                        <td>{{item.fecha_fin}}</td>
+                       <td>
+                          <a  class="btn btn-info"   (click)="ConsultaPlanes(item)" data-dismiss="modal">
+                         <i class="material-icons">search</i> <span>Consulta</span>
+                       </a></td>
            </tr>
-
-
          </tbody>
-   </table>
-
-
-
-      <!---------------------------------------------------------------------->
+    </table>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -355,8 +353,69 @@
     </div>
   </div>
 </div>
+<!-------------------------- Modal  Crea Dias Leccionario------------------------------------------------------------- -->
+<div class="modal fade" id="lecionario-modal-lg" tabindex="-1" role="dialog" aria-labelledby="lecionario-modal-lg" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Crea Dias Leccionario y Duplicar Plan</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="category">Selecione un Paralelo :
+          <select #Paralelo="ngModel" name="Paralelo"  [(ngModel)]="cod_paralelo_duplicado"   (change)="CreaDias(cod_deta_dias)">
+          <option *ngFor="let paralelo of Paralelos" [value]="paralelo.cod_paralelo">{{paralelo.des_paralelo}}</option>
+          </select>
+        <table  class="table">
+            <thead class="text-danger">
+                <tr>
+                  <th></th>
+                  <th>Día</th>
+                    <th>Hora</th>
+                      <th>Añadir hora</th>
 
-<!-------------------------------------------------------------------------------------------------------------->
+                </tr>
+            </thead>
+            <tbody >
+           <tr  *ngFor="let item of ArregloFechas; let i=index">
+                       <td>
+                              <div class="checkbox">
+                                <label>
+                                   <input type="checkbox"  [(ngModel)]="item.estado">
+                                 </label>
+                                </div>
+                          </td>
+                          <td>
+                              {{item.dias}} - {{item.fecha_hora}}
+                          </td>
+                          <td>
+                              <select  [(ngModel)]="item.cod_hora">
+                              <option *ngFor="let horario of _LeccionarioServices.HorariosList" [value]="horario.cod_horario"> {{horario.horas}}</option>
+                             </select>
+
+                           </td>
+                           <td>
+                                 <button type="button" rel="tooltip" title="View Profile" class="btn btn-info" (click)="DuplicaHora(i,item)">
+                                           <i class="material-icons">add_box</i>
+                                  </button>
+
+                          </td>
+
+              </tr>
+            </tbody>
+       </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <input type="button"  value="Guardar"   (click)="GuardaDiaLeccionario()" class="btn btn-success"  >
+      </div>
+    </div>
+  </div>
+</div>
+<!-------------------------------------------Edit Planificacion------------------------------------------------------------------->
 <div class="modal fade" id="bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="bd-example-modal-lg" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
   <div   class="modal-dialog modal-lg" role="document">
     <div  class="modal-content">

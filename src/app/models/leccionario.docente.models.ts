@@ -24,6 +24,7 @@ export class ModelLeccionarioDocente{
     public fecha_coordinador :string,
     public fecha_inspector :string,
     public usuario_coordinador :string,
-    public usuario_inspector :string
+    public usuario_inspector :string,
+    public descripcion:string
   ){}
   }

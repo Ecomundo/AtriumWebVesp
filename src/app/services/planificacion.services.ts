@@ -166,6 +166,29 @@ export class PlanificacionServices{
       return this._http.post(this.url+'DeletePlan', params ,{headers: headers})
                .map(res => res.json());
     }
+
+        InsertaPlanificacionDiaria(datos){
+          let json = JSON.stringify(datos);
+          let params =json;
+
+             let headers = new Headers({'Content-Type':'application/json',
+                                         'Authorization': 'bearer '+this.getToken()});
+          return this._http.post(this.url+'InsertaPlanificacionDiaria', params ,{headers: headers})
+                   .map(res => res.json());
+
+        }
+
+
+        ConsultaPlanificacionDiaria(datos){
+          let json = JSON.stringify(datos);
+          let params =json;
+
+             let headers = new Headers({'Content-Type':'application/json',
+                                         'Authorization': 'bearer '+this.getToken()});
+          return this._http.post(this.url+'ConsultaPlanificacionDiaria', params ,{headers: headers})
+                   .map(res => res.json());
+
+        }
 ///Accede a local Sotrage y devuele los datos ya procesados
     getToken(){
        let token = localStorage.getItem('token');
