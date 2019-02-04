@@ -7,6 +7,7 @@ export class ModelLeccionarioInspector{
     public cod_paralelo: number,
     public unidad    : number,
     public des_unidad  :string,
-    public fecha:string
+    public fecha:string,
+    public fecha_fin:string
   ){}
   }
