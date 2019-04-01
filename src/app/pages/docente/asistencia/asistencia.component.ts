@@ -2,19 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
-import { ModelMateriasDocentes }  from '../../models/modelMaterias'
-import { MateriasDocenteService } from '../../services/materiasDocentes.services'
+import { ModelMateriasDocentes }  from '../../../models/modelMaterias'
+import { MateriasDocenteService } from 'app/services/service.index'
 import { saveAs } from 'file-saver/FileSaver';
 import * as _swal from 'sweetalert';
 import { SweetAlert } from 'sweetalert/typings/core';
-//import  swal from 'sweetalert';
+
 @Component({
-  selector: 'app-table-list',
-  templateUrl: './table-list.component.html',
-  styleUrls: ['./table-list.component.css'],
-  providers :[MateriasDocenteService,DatePipe]
+  selector: 'app-asistencia',
+  templateUrl: './asistencia.component.html',
+  styleUrls: ['./asistencia.component.css']//,
+  //providers :[MateriasDocenteService,DatePipe]
 })
-export class TableListComponent implements OnInit {
+export class AsistenciaComponent implements OnInit {
   DatoPDF: Array<any>;
   faltasAtraso: Array<any>;
   faltas: Array<any>;

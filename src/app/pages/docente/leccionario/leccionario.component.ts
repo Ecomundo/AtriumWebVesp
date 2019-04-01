@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { MateriasDocenteService } from '../../services/materiasDocentes.services'
-import {LeccionarioServices} from '../../services/leccionario.services'
 import * as moment from 'moment';
-import {ModelLeccionarioDocente}  from '../../models/leccionario.docente.models';
+import {ModelLeccionarioDocente}  from '../../../models/leccionario.docente.models';
 import { DatePipe } from '@angular/common';
 import { saveAs } from 'file-saver/FileSaver';
 import * as _swal from 'sweetalert';
 import { SweetAlert } from 'sweetalert/typings/core';
+import { MateriasDocenteService, LeccionarioServices } from 'app/services/service.index'
+
 @Component({
   selector: 'app-leccionario',
   templateUrl: './leccionario.component.html',
-  styleUrls: ['./leccionario.component.scss'],
-  providers :[MateriasDocenteService, LeccionarioServices, DatePipe]
+  styleUrls: ['./leccionario.component.scss']//,
+  //providers :[MateriasDocenteService, LeccionarioServices, DatePipe]
 })
 export class LeccionarioComponent implements OnInit {
 visible=true;

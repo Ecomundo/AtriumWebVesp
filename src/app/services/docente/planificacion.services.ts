@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 import {Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
-import {Global } from './global'
-import { Planificacion  } from '../models/planificacion';
-import {DetallePlanAdmin} from '../models/DetallePlanAdmin.models';
+import {Global } from '../global'
+import { Planificacion  } from '../../models/planificacion';
+import {DetallePlanAdmin} from '../../models/DetallePlanAdmin.models';
 import { ResponseContentType } from '@angular/http';
 @Injectable()//para utilizar en otra Clases
 export class PlanificacionServices{

@@ -1,0 +1,33 @@
+export class ModelRepreConsul {
+    domicilio: string;
+    celular_a: string;
+    email_a: string;
+    telefono: string;
+    celular: string;
+    fec_nacim: string;
+    representa: string;
+    oficina: string;
+    telf_emerg: string;
+    email_repre: string;
+    cod_emp: number;
+    cod_fac: number;
+    cod_esc: number;
+    sec_alum: number;
+    cod_alum: number;
+    cod_nivel: number;
+    sexo: string;
+    nombre1: string;
+    nombre2: string;
+    apell1: string;
+    apell2: string;
+    nomalum: string;
+    apealum: string;
+    estado: string;
+    ult_fac_cli: string;
+    usuario: string;
+    fecha: string;
+    fundador: number;
+    cedula: string;
+    USERNAME: string;
+    PASS: string;
+}

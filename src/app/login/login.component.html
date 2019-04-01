@@ -1,53 +1,51 @@
 <!-- ============================================================== -->
 <!-- Main wrapper - style you can find in pages.scss -->
 <!-- ============================================================== -->
-<section id="wrapper" >
-    <div class="login-registro">
-        <div class="login-boxe">
-            <div class="card-content">
-                <form #loginForm="ngForm" (ngSubmit)="onSubmit()" >
-                    <h3 class="title text-center">Atrium</h3>
-                    <div class="form-group">
-                        <div class="input-group space-email">
-                          <span class="input-group-addon">    <i class="material-icons">account_circle</i></span>
-                          <input type="email"  #email="ngModel" name="email" [(ngModel)]="user.USERNAME" class="form-control"
-                          placeholder="Usuario Atrium" required/>
-                          </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="input-group space-pass">
-                        <span class="input-group-addon" ><i class="material-icons">lock</i></span>
-                        <input type="password"  #password="ngModel" name="password" [(ngModel)]="user.PASS" class="form-control"
-                         placeholder="Contraseña"required />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-12">
-                            <div class="checkbox checkbox-info pull-left p-t-0">
-                                <input id="checkbox-signup" type="checkbox" class="filled-in chk-col-light-blue">
-                                <label for="checkbox-signup"> Remember me </label>
-                            </div> <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a> </div>
-                    </div>
-                    <div class="form-group">
-                            <div *ngIf="erroMessage">
-                              <div class="alert alert-danger">
-                                <strong>Error: </strong>{{erroMessage}}
-                              </div>
-                            </div>
-                            <div *ngIf="!email.valid && email.touched">
-                              <div class="alert alert-danger">
-                                <strong> Email es obligatorio </strong>
-                              </div>
-                            </div>
-                    </div>
+<section id="wrapper">
+  <div class="login-registro">
+    <div class="login-boxe">
+      <div class="card-content">
+        <form ngNativeValidate [formGroup]="forma" #loginForm="ngForm" (ngSubmit)="onSubmit()">
+          <h3 class="title text-center">Atrium</h3>
 
-
-                              <input class="btn btn-block btn-success" type="submit" value="LogIn"  (ngClik)="onSubmit()">
-
-
-                </form>
-
+          <div class="row">
+              <div class="col-sm-4" *ngFor="let type of typelog">
+                <div class="form-group" style="text-align: center; color:#fff">
+                  <input formControlName="typelog" type="radio" name="typelog" [(ngModel)]="log" [value]="type.value" required>
+                  <br>{{type.title}}
+                </div>
+              </div>
             </div>
-        </div>
+
+          <div class="form-group">
+            <div class="input-group space-email">
+              <span class="input-group-addon"> <i class="material-icons">account_circle</i></span>
+              <input formControlName="username" type="text" name="email" [(ngModel)]="user.USERNAME" class="form-control"
+                placeholder="Usuario Atrium" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group space-pass">
+              <span class="input-group-addon"><i class="material-icons">lock</i></span>
+              <input formControlName="pass" type="password" name="password" [(ngModel)]="user.PASS" class="form-control"
+                placeholder="Contraseña" required />
+            </div>
+          </div>
+          
+          <div class="form-group row">
+            <div class="col-md-12">
+              <div class="checkbox checkbox-info pull-left p-t-0">
+                <input id="checkbox-signup" type="checkbox" class="filled-in chk-col-light-blue">
+                <label for="checkbox-signup"> Remember me </label>
+              </div> <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i
+                  class="fa fa-lock m-r-5"></i> Forgot pwd?</a>
+            </div>
+          </div>
+
+          <input class="btn btn-block btn-success" type="submit" value="LogIn" (ngClik)="onSubmit()">
+
+        </form>
+      </div>
     </div>
+  </div>
 </section>

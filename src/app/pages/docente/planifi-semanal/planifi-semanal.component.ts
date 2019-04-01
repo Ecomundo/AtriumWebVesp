@@ -1,23 +1,22 @@
 import { Component,Renderer2, ViewChild ,ElementRef  , OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { PlanificacionCabeceraModel  } from '../../models/planificacion.cabecera.models';
+import { PlanificacionCabeceraModel  } from '../../../models/planificacion.cabecera.models';
 import { NgForm } from '@angular/forms'
-import { PlanificacionServices  } from '../../services/planificacion.services';
-import { MateriasDocenteService } from '../../services/materiasDocentes.services'
 import * as moment from 'moment';
 import { extendMoment } from 'moment-range';
-import { Planificacion  } from '../../models/planificacion';
-import {LeccionarioServices} from '../../services/leccionario.services'
+import { Planificacion  } from '../../../models/planificacion';
 //import {DetallePlanAdmin} from '../models/DetallePlanAdmin.models';
 
 import { saveAs } from 'file-saver/FileSaver';
 import * as _swal from 'sweetalert';
 import { SweetAlert } from 'sweetalert/typings/core';
+
+import { PlanificacionServices, MateriasDocenteService, LeccionarioServices } from 'app/services/service.index';
 @Component({
   selector: 'app-planifi-semanal',
   templateUrl: './planifi-semanal.component.html',
-  styleUrls: ['./planifi-semanal.component.scss'],
-   providers :[PlanificacionServices,MateriasDocenteService, DatePipe,LeccionarioServices]
+  styleUrls: ['./planifi-semanal.component.scss']//,
+  //providers :[PlanificacionServices,MateriasDocenteService, DatePipe,LeccionarioServices]
 })
 export class PlanifiSemanalComponent implements OnInit {
   @ViewChild("guardarModal") guardarModal: ElementRef;

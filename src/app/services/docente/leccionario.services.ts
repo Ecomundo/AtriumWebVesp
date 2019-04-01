@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { ModelHorarios }  from '../models/horarios.model';
-import {UserService}from './user.service';
+import { ModelHorarios }  from './../../models/horarios.model';
+import {UserService}from '../user.service';
 import {Http, Response, Headers } from '@angular/http';
-import {Global } from './global'
-import {ModelLeccionarioDocente}  from '../models/leccionario.docente.models';
-import {ModelLeccionarioInspector}  from '../models/LeccionaInspec.models';
+import {Global } from './../global'
+import {ModelLeccionarioDocente}  from '../../models/leccionario.docente.models';
+import {ModelLeccionarioInspector}  from '../../models/LeccionaInspec.models';
 import { ResponseContentType } from '@angular/http';
 @Injectable()
 export class LeccionarioServices {

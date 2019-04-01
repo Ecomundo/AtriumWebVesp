@@ -1,0 +1,88 @@
+th{
+    background-color: #e8ffe8;
+}
+
+table{
+    margin-top: 25px;
+}
+
+td, .tbDeu{
+    border: 1px solid #50b848;
+}
+
+.online-init{
+    background-color: #D7ECFC;
+    padding: 15px;
+    margin: 20px 100px 20px 100px;
+}
+
+.color{
+    color:#5D5D5D;
+}
+
+.panel {
+    margin: 0 auto;
+    background-color: #F5F5F7;
+    border: 1px solid #ddd;
+    padding: 20px;
+    display: block;
+    width: 80%;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  }
+  .btnpm {
+    background: rgb(140,197,65); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(140,197,65,1) 0%, rgba(20,167,81,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(140,197,65,1) 0%,rgba(20,167,81,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(140,197,65,1) 0%,rgba(20,167,81,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#44afe7', endColorstr='#3198df',GradientType=0 );
+    color: #fff;
+    display: block;
+    width: 100%;
+    border: 1px solid rgba(46, 86, 153, 0.0980392);
+    border-bottom-color: rgba(46, 86, 153, 0.4);
+    border-top: 0;
+    border-radius: 4px;
+    font-size: 17px;
+    text-shadow: rgba(46, 86, 153, 0.298039) 0px -1px 0px;
+    line-height: 34px;
+    -webkit-font-smoothing: antialiased;
+    font-weight: bold;
+    display : block;
+    margin-top: 20px;
+  }
+  .btn:hover {
+    cursor: pointer;
+  }
+  .modal-body {
+    max-height: calc(90vh - 210px);
+    overflow-y: auto;
+  }  
+  .modal-header{
+    padding-bottom: 1.5rem;
+    text-align: center;
+  }
+  .modal-footer{
+    padding-top: 1.5rem;
+    text-align: center;
+  }
+  p{
+    text-align: justify;
+    font-weight:100;
+  }
+  ol{
+    padding-right: 3rem;
+  }
+  ol li {
+    font-weight:bold;
+  }
+  .ndeu{
+    color: #50b848;
+    font-weight: bold;
+    font-size: 3rem;
+    padding: 5rem;
+    text-align: center;
+  }
+  .form-control{
+    color: #fff;
+  }

@@ -2,12 +2,12 @@ import {Injectable} from '@angular/core';
 import {Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
-import {Global } from './global';
+import {Global } from '../global';
 import { ResponseContentType } from '@angular/http';
 
-import { ModelMateriasDocentes }  from '../models/modelMaterias';
-import { ModelUnidades }  from '../models/unidades';
-import {ModelAlumnCursos} from '../models/ModelAlumCursos';
+import { ModelMateriasDocentes }  from '../../models/modelMaterias';
+import { ModelUnidades }  from '../../models/unidades';
+import {ModelAlumnCursos} from '../../models/ModelAlumCursos';
 
 @Injectable()//para utilizar en otra Clases
 export class MateriasDocenteService{

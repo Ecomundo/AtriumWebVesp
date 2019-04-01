@@ -1,14 +1,12 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { ROUTES } from '../sidebar/sidebar.component';
-import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
-import {UserService}from '../../services/user.service';
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { SidebarService, UserService }from 'app/services/service.index';
 
-import {Router} from '@angular/router';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'],
-  providers: [UserService]
+  styleUrls: ['./navbar.component.css']//,
+  //providers: [UserService]
 })
 export class NavbarComponent implements OnInit {
     private listTitles: any[];
@@ -22,17 +20,26 @@ export class NavbarComponent implements OnInit {
 
     constructor(location: Location,  private element: ElementRef ,
               private _userService:UserService,
-              private _router: Router) {
+              public _sidebar: SidebarService) {
       this.location = location;
           this.sidebarVisible = false;
     }
 
     ngOnInit(){
 
-      this.username=  localStorage.getItem('username');
-      this.email   =  localStorage.getItem('e_mail');
-      this.nombre  =  localStorage.getItem('nombre');
-      this.listTitles = ROUTES.filter(listTitle => listTitle);
+        if(localStorage.getItem('type') ===  'D'){
+            this.username=  localStorage.getItem('username');
+            this.email   =  localStorage.getItem('e_mail');
+            this.nombre  =  localStorage.getItem('nombre');
+            this.listTitles = this._sidebar.menuD.filter(listTitle => listTitle);
+            //this.menuItems = this.ROUTES.filter(menuItem => menuItem);
+          }else if(localStorage.getItem('type') ===  'R'){
+            this.username=  localStorage.getItem('cod_repre');
+            this.email   =  localStorage.getItem('email');
+            this.nombre  =  localStorage.getItem('nomrepre');
+            this.listTitles = this._sidebar.menuR.filter(listTitle => listTitle);
+        }
+
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
     }
@@ -64,19 +71,22 @@ export class NavbarComponent implements OnInit {
     };
 
     getTitle(){
-      var titlee = this.location.prepareExternalUrl(this.location.path());
-      if(titlee.charAt(0) === '#'){
-          titlee = titlee.slice( 2 );
+        let titlee = this.location.prepareExternalUrl(this.location.path());
+        let title;
+        if(titlee.charAt(0) === '#'){
+            titlee = titlee.slice( 2 );
+            
+        }
+        titlee = titlee.split('/').pop();
+        for(var item = 0; item < this.listTitles.length; item++){
+          title = this.listTitles[item].path.split('/').pop();
+            if(title === titlee){
+                  titlee = this.listTitles[item].title;
+            }
+        }
+        return titlee;
       }
-      titlee = titlee.split('/').pop();
-
-      for(var item = 0; item < this.listTitles.length; item++){
-          if(this.listTitles[item].path === titlee){
-              return this.listTitles[item].title;
-          }
-      }
-      return titlee;
-    }
+      
     logout(){
     this._userService.logout();
     this.token=null;

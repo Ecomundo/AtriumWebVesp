@@ -15,32 +15,75 @@ export class UserService{
    estaLogueado() {
      return ( this.token !=null ) ? true : false;
    }
-   signup(user_to_login){
-     let json = JSON.stringify(user_to_login);
-     let params =json;
-     let datos ;
 
-     let headers = new Headers({'Content-Type':'application/json'});
-     return this._http.post(this.url+'Docentes', params ,{headers: headers})
-              .map(res => {
-                    datos=res.json();
-                    this.guardarStorage(datos[0].token, datos[1] )
-                    return true;
-               },
-             );
-   }
-   guardarStorage(token, datos){
+   signupD(user_to_login) {
+    let json = JSON.stringify(user_to_login);
+    let params = json;
+    let datos;
 
-      localStorage.setItem('token', token);
-      localStorage.setItem('cod_per', datos.cod_per);
-      localStorage.setItem('let_per',  datos.let_per);
-      localStorage.setItem('cod_profesor',  datos.cod_profesor);
-      localStorage.setItem('nombre',  datos.nombre);
-      localStorage.setItem('e_mail',  datos.e_mail);
-      localStorage.setItem('username',  datos.username);
-      localStorage.setItem('bandera',  datos.bandera);
-       this.getToken();
-   }
+    console.log(user_to_login);
+
+      let headers = new Headers({ 'Content-Type': 'application/json' });
+      return this._http.post(this.url + 'Docentes', params, { headers: headers })
+        .map(res => {
+  
+          datos = res.json();
+          console.log(datos);
+          this.guardarStorageD(datos[0].token, datos[1])
+          return true;
+        });
+
+  }
+
+  signupR(user_to_login) {
+    let json = JSON.stringify(user_to_login);
+    let params = json;
+    let datos;
+
+    console.log(user_to_login);
+
+      let headers = new Headers({ 'Content-Type': 'application/json' });
+      return this._http.post(this.url + 'Representantes', params, { headers: headers })
+        .map(res => {
+  
+          datos = res.json();
+          console.log(datos);
+          this.guardarStorageR(datos[0].token, datos[1])
+          return true;
+        });
+
+  }
+
+  guardarStorageD(token, datos) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('cod_per', datos.cod_per);
+    localStorage.setItem('let_per', datos.let_per);
+    localStorage.setItem('cod_profesor', datos.cod_profesor);
+    localStorage.setItem('nombre', datos.nombre);
+    localStorage.setItem('e_mail', datos.e_mail);
+    localStorage.setItem('username', datos.username);
+    localStorage.setItem('bandera', datos.bandera);
+    localStorage.setItem('cod_emp', '1');
+    localStorage.setItem('type', 'D');
+    this.getToken();
+  }
+
+  guardarStorageR(token, datos) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('cod_alum', datos.cod_alum);
+    localStorage.setItem('cod_per', datos.cod_per);
+    localStorage.setItem('let_per', datos.let_per);
+    localStorage.setItem('cod_repre', datos.cod_repre);
+    localStorage.setItem('nomrepre', datos.nomrepre);
+    localStorage.setItem('email', datos.email);
+    localStorage.setItem('parentesco_est', datos.parentesco_est);
+    localStorage.setItem('telefono', datos.telefono);
+    localStorage.setItem('celular', datos.celular);
+    localStorage.setItem('tipo_representante', datos.tipo_representante);
+    localStorage.setItem('type', 'R');
+    this.getToken();
+  }
+  
    logout() {
 
      this.token = null;
