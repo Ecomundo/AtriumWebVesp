@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
-import {Global } from './global'
+import {Global } from './global'  
 import { Router } from '@angular/router';
 @Injectable()//para utilizar en otra Clases
 export class UserService{
