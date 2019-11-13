@@ -5,56 +5,50 @@ import {Observable} from 'rxjs/Observable';
 import {Global } from './global'  
 import { Router } from '@angular/router';
 @Injectable()//para utilizar en otra Clases
-export class UserService{
-   public url: string;
-   public token :string;
-   constructor(private _http: Http,  public router: Router){
-     this.url = Global.url;
-     this.getToken();
-   }
-   estaLogueado() {
-     return ( this.token !=null ) ? true : false;
-   }
+export class UserService {
 
-   signupD(user_to_login) {
-    let json = JSON.stringify(user_to_login);
-    let params = json;
-    let datos;
+  public url: string;
+  public token: string;
 
-    console.log(user_to_login);
+  constructor(private _http: Http,  public router: Router){
 
-      let headers = new Headers({ 'Content-Type': 'application/json' });
-      return this._http.post(this.url + 'Docentes', params, { headers: headers })
-        .map(res => {
-  
-          datos = res.json();
-          console.log(datos);
-          this.guardarStorageD(datos[0].token, datos[1])
-          return true;
-        });
+    this.url = Global.url;
+    this.getToken();
 
   }
 
-  signupR(user_to_login) {
-    let json = JSON.stringify(user_to_login);
-    let params = json;
+   estaLogueado() {
+     return ( this.token != null ) ? true : false;
+   }
+
+   signupD(user_to_login: any) {
+    const json = JSON.stringify(user_to_login);
+    const params = json;
     let datos;
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    return this._http.post(this.url + 'Docentes', params, { headers: headers })
+      .map(res => {
+        datos = res.json();
+        this.guardarStorageD(datos[0].token, datos[1])
+        return true;
+      });
+  }
 
-    console.log(user_to_login);
+  signupR(user_to_login: any) {
+    const json = JSON.stringify(user_to_login);
+    const params = json;
+    let datos: any[];
 
-      let headers = new Headers({ 'Content-Type': 'application/json' });
+      const headers = new Headers({ 'Content-Type': 'application/json' });
       return this._http.post(this.url + 'Representantes', params, { headers: headers })
         .map(res => {
-  
           datos = res.json();
-          console.log(datos);
           this.guardarStorageR(datos[0].token, datos[1])
           return true;
         });
-
   }
 
-  guardarStorageD(token, datos) {
+  guardarStorageD(token: any, datos: any) {
     localStorage.setItem('token', token);
     localStorage.setItem('cod_per', datos.cod_per);
     localStorage.setItem('let_per', datos.let_per);
@@ -68,7 +62,7 @@ export class UserService{
     this.getToken();
   }
 
-  guardarStorageR(token, datos) {
+  guardarStorageR(token: any, datos: any) {
     localStorage.setItem('token', token);
     localStorage.setItem('cod_alum', datos.cod_alum);
     localStorage.setItem('cod_per', datos.cod_per);
@@ -79,36 +73,34 @@ export class UserService{
     localStorage.setItem('parentesco_est', datos.parentesco_est);
     localStorage.setItem('telefono', datos.telefono);
     localStorage.setItem('celular', datos.celular);
+    localStorage.setItem('hijos', datos.hijos);
     localStorage.setItem('tipo_representante', datos.tipo_representante);
     localStorage.setItem('type', 'R');
     this.getToken();
   }
-  
-   logout() {
 
-     this.token = null;
+  logout() {
 
-     localStorage.removeItem('token');
+    this.token = null;
 
-      localStorage.clear();
-     this.router.navigate(['/login']);
-   }
+    localStorage.removeItem('token');
 
-
+    localStorage.clear();
+    this.router.navigate(['/login']);
+  }
 
 
-///Accede a local Sotrage y devuele los datos ya procesados
-    getToken(){
 
-         if(localStorage.getItem('token')){
-          this.token =localStorage.getItem('token');
 
-       }else
-       {
-         this.token=null;
+ // Accede a local Sotrage y devuele los datos ya procesados
+  getToken() {
 
-       }
-    }
+      if (localStorage.getItem('token')){
+        this.token = localStorage.getItem('token');
+      } else {
+        this.token = null;
+      }
+  }
 
 
 }

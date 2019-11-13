@@ -1,360 +1,244 @@
+<script src="https://cdn.paymentez.com/checkout/1.0.1/paymentez-checkout.min.js"></script>
+
 <div class="main-content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <!------------------------------------------------Cabecera de la tabla------------------------------------------------>
-          <!------------------------------------------------Cabecera de la tabla------------------------------------------------>
-          <div class="card-header">
-            <div class="row">
-              <div class="col-sm-12">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <!------------------------------------------------Cabecera de la tabla------------------------------------------------>
+                    <!------------------------------------------------Cabecera de la tabla------------------------------------------------>
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-12">
 
-                <div class="row no-gutters">
-                  <h4 class="title col-12 col-sm-6 col-md-8">Datos de Factura</h4>
-                  <div class="title col-6 col-md-4">Estudiante</div>
-                </div>
-                <div class="row">
-                  <div class="col-md-4" *ngFor="let item of _pagoOnlineService.datoFacConsul">
-                    <p class="category">NOMBRES Y APELLIDOS:
-                        <input type="text" #representa="ngModel" name="representa" required [(ngModel)]="item.representante"  class="form-control cabecera"  >
-                    
-                    <p class="category">DIRECCION:
-                        <input type="text" #direc="ngModel" name="direc" required [(ngModel)]="item.direccion"  class="form-control cabecera"  >
-                  </div>
+                                <div class="row no-gutters">
+                                    <h4 class="title col-12 col-sm-6 col-md-8">Datos de Factura</h4>
+                                    <div class="title col-6 col-md-4">Estudiante</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4" *ngFor="let item of _pagoOnlineService.datoFacConsul">
+                                        <p class="category">NOMBRES Y APELLIDOS:
+                                            <input type="text" #representa="ngModel" name="representa" required [(ngModel)]="item.representante" class="form-control cabecera">
 
-                  <div class="col-md-4" *ngFor="let item of _pagoOnlineService.datoFacConsul">
-                      <p  class="category">C.I/PASAPORTE:
-                          <input type="text" #cedu="ngModel" name="cedu" required [(ngModel)]="item.cedula"  class="form-control cabecera"  >
-                          
-                      <p class="category">TELEFONO:
-                          <input type="text" #direc="ngModel" name="direc" required [(ngModel)]="item.telefono"  class="form-control cabecera"  >
+                                            <p class="category">DIRECCION:
+                                                <input type="text" #direc="ngModel" name="direc" required [(ngModel)]="item.direccion" class="form-control cabecera">
+                                    </div>
+
+                                    <div class="col-md-4" *ngFor="let item of _pagoOnlineService.datoFacConsul">
+                                        <p class="category">C.I/PASAPORTE:
+                                            <input type="text" #cedu="ngModel" name="cedu" required [(ngModel)]="item.cedula" class="form-control cabecera">
+
+                                            <p class="category">TELEFONO:
+                                                <input type="text" #direc="ngModel" name="direc" required [(ngModel)]="item.telefono" class="form-control cabecera">
+                                    </div>
+
+                                    <div class="col-md-4" *ngFor="let item of _pagoOnlineService.datoRepreConsul">
+                                        <p class="category">ESTUDIANTE:<a class="contenido"> {{item.nomalum}} {{item.apealum}} </a>
+                                            <p class="category">CODIGO:<a class="contenido"> {{item.cod_alum}} </a>
+                                                <br>
+                                                <a class="btn btn-success" (click)="actualizar()">
+                                                    <span>Actualizar</span>
+                                                </a>
+
+                                                <div *ngFor="let ite of _pagoOnlineService.datoFacConsul">
+                                                    <p class="category">Email:
+                                                        <input type="email" #email="ngModel" name="email" [(ngModel)]="ite.email" class="form-control cabecera">
+                                                </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                  <div class="col-md-4" *ngFor="let item of _pagoOnlineService.datoRepreConsul">
-                    <p class="category">ESTUDIANTE:<a class="contenido"> {{item.nomalum}}{{item.apealum}} </a>
-                      <p class="category">CODIGO:<a class="contenido"> {{item.cod_alum}} </a>
-                        <br>
-                        <a class="btn btn-success" (click)="actualizar()">
-                            <span>Actualizar</span>
-                          </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+                    <div class="card-content table-responsive">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <a class="btn btn-success" (click)="inicio()">
+                                    <i class="material-icons">home</i> Inicio
+                                </a>
+                            </div>
+                            <div class="col-sm-3">
+                                <a class="btn btn-info" (click)="pagosPendientes()">
+                                    <i class="material-icons">search</i> Pagos pendientes
+                                </a>
+                            </div>
+                        </div>
 
-          <div class="card-content table-responsive">
-            <div class="row">
-              <div class="col-sm-3">
-                <a class="btn btn-success" (click)="inicio()">
-                  <i class="material-icons">home</i> Inicio
-                </a>
-              </div>
-              <div class="col-sm-3">
-                <a class="btn btn-info" (click)="pagosPendientes()">
-                  <i class="material-icons">search</i> Pagos pendientes
-                </a>
-              </div>
-            </div>
+                        <div *ngIf="!content">
+                            <div class="online-init color">
+                                <b>Estimado Usuarios</b><br><br>
+                                <ul>
+                                    <li>Para poder realizar pagos por internet de clic en PAGOS PENDIENTES.</li>
+                                    <li>Para poder visualizar y verificar los pagos realizados de clic en HISTORIAL PAGOS.</li>
+                                    <li>Las matrículas que son al contado y sin descuento podrán realizar el pago por internet.</li>
+                                    <li>Al finalizar el pago se enviará una notificación a su correo institucional.</li>
+                                </ul>
+                                <b>Tarjetas Disponibles:</b><br><br>
+                                <b>Usted puede pagar en línea con su tarjeta de crédito en plan corriente o diferido.</b><br><br>
+                                <ul>
+                                    <li>Diners Club, Discovery, Visa, MasterCard Banco Pichincha. (3 meses sin intereses, desde 6 hasta 48 meses con intereses).</li>
+                                    <li>Visa, Mastercad del Banco del Pacifico o cualquier otra tarjeta en plan corriente. (3 y 6 meses sin intereses, desde 9 hasta 48 meses con intereses).</li>
+                                </ul>
+                            </div>
 
-            <div *ngIf="!content">
-              <div class="online-init color">
-                <b>Estimado Usuarios</b><br><br>
-                <ul>
-                  <li>Para poder realizar pagos por internet de clic en PAGOS PENDIENTES.</li>
-                  <li>Para poder visualizar y verificar los pagos realizados de clic en HISTORIAL PAGOS.</li>
-                  <li>Las matrículas que son al contado y sin descuento podrán realizar el pago por internet.</li>
-                  <li>Al finalizar el pago se enviará una notificación a su correo institucional.</li>
-                </ul>
-                <b>Tarjetas Disponibles:</b><br><br>
-                <b>Usted puede pagar en línea con su tarjeta de crédito en plan corriente o diferido.</b><br><br>
-                <ul>
-                  <li>Diners Club, Discovery, Visa, MasterCard Banco Pichincha. (3 meses sin intereses, desde 6 hasta 48
-                    meses con intereses).</li>
-                  <li>Visa, Mastercad del Banco del Pacifico o cualquier otra tarjeta en plan corriente. (3 y 6 meses
-                    sin intereses, desde 9 hasta 48 meses con intereses).</li>
-                </ul>
-              </div>
+                        </div>
 
-            </div>
-
-            <div *ngIf="content">
-              <div *ngIf="dl === true">
-                <table class="table">
-                  <thead class="text-danger">
-                    <tr>
-                      <th class="tbDeu" colspan="4" style="text-align:center; background-color: #50b848;"><b
-                          style="color:#fff">Pagos Pendientes</b></th>
-                    </tr>
-                    <tr>
-                      <th class="tbDeu" style="text-align:center;">Factura</th>
-                      <th class="tbDeu" style="text-align:center; width: 50%;">Descripcion</th>
-                      <th class="tbDeu" style="text-align:center;">Total</th>
-                      <th class="tbDeu" style="text-align:center;">PAGAR</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let item of this._pagoOnlineService.deudasList; let in = index">
-                      <td style="text-align:center;"> {{item.CFAC_COD}} </td>
-                      <td> {{item.DESCRIPCION}}, {{item.CFAC_PERI}} </td>
-                      <td style="text-align:center; "> {{item.CFAC_VALOR}} </td>
-                      <td style="text-align:center;">
-                        <div class="checkbox">
-                          <label>
+                        <div *ngIf="content">
+                            <div *ngIf="dl === true">
+                                <table class="table">
+                                    <thead class="text-danger">
+                                        <tr>
+                                            <th class="tbDeu" colspan="4" style="text-align:center; background-color: #652d89;"><b style="color:#fff">Pagos Pendientes</b></th>
+                                        </tr>
+                                        <tr>
+                                            <th class="tbDeu" style="text-align:center;">Factura</th>
+                                            <th class="tbDeu" style="text-align:center; width: 50%;">Descripcion</th>
+                                            <th class="tbDeu" style="text-align:center;">Total</th>
+                                            <th class="tbDeu" style="text-align:center;">PAGAR</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of this._pagoOnlineService.deudasList; let in = index">
+                                            <td style="text-align:center;"> {{item.CFAC_COD}} </td>
+                                            <td> {{item.DESCRIPCION}}, {{item.CFAC_PERI}} </td>
+                                            <td style="text-align:center; "> {{item.CFAC_VALOR}} </td>
+                                            <td style="text-align:center;">
+                                                <div class="checkbox">
+                                                    <label>
                             <input [(ngModel)]="item.ACCEPT" type="checkbox" [disabled]="item.ACTIVE == false"
                               (change)="checkAll(in)">
                           </label>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div class="row" style="float: right;">
-                  <div class="col-sm-3">
-                    <button class="btn btn-success" data-toggle="modal" data-target="#bd-example-modal-terminos"
-                      (click)="pagar()" [disabled]="this._pagoOnlineService.deudasList[0].ACCEPT == false">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="row" style="float: right;">
+                                    <div class="col-sm-3">
+                                        <button class="btn btn-success" data-toggle="modal" data-target="#bd-example-modal-terminos" (click)="pagar()" [disabled]="this._pagoOnlineService.deudasList[0].ACCEPT == false">
                       <i class="material-icons">attach_money</i> Pagar
                     </button>
-                  </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="dl === false">
+                                <p class="ndeu">Sus pagos estan al día</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div *ngIf="dl === false">
-                  <p class = "ndeu">Sus pagos estan al día</p>
-              </div>
             </div>
-
-            <!-- <div class="panel">
-  <form id="add-card-form">
-    <div class="paymentez-form" id="my-card" data-capture-name="true"></div>
-    <button class="btnpm">Save</button>
-    <br/>
-    <div id="messages"></div>
-  </form>
-  
-</div>
-
-<script>
-    $(function() {
-      //
-      // EXAMPLE CODE FOR PAYMENTEZ INTEGRATION
-      // ---------------------------------------------------------------------------
-      //
-      //  1.) You need to import the Paymentez JS -> https://cdn.paymentez.com/js/v1.0.1/paymentez.min.js
-      //
-      //  2.) You need to import the Paymentez CSS -> https://cdn.paymentez.com/js/v1.0.1/paymentez.min.css
-      //
-      //  3.) Add The Paymentez Form
-      //  <div class="paymentez-form" id="my-card" data-capture-name="true"></div>
-      //
-      //  3.) Init library
-      //  Replace "PAYMENTEZ_CLIENT_APP_CODE" and "PAYMENTEZ_CLIENT_APP_KEY" with your own Paymentez Client Credentials.
-      //
-      // 4.) Add Card: converts sensitive card data to a single-use token which you can safely pass to your server to charge the user.
-      /**
-       * Init library
-       *
-       * @param env_mode `prod`, `stg`, `local` to change environment. Default is `stg`
-       * @param paymentez_client_app_code provided by Paymentez.
-       * @param paymentez_client_app_key provided by Paymentez.
-       */
-      Paymentez.init('stg', 'PAYMENTEZ_CLIENT_APP_CODE', 'PAYMENTEZ_CLIENT_APP_KEY');
-      
-      var form              = $("#add-card-form");
-      var submitButton            = form.find("button");
-      var submitInitialText = submitButton.text();
-      $("#add-card-form").submit(function(e){
-        var myCard = $('#my-card');
-        $('#messages').text("");
-        var cardToSave = myCard.PaymentezForm('card');
-        if(cardToSave == null){
-          $('#messages').text("Invalid Card Data");
-        }else{
-          submitButton.attr("disabled", "disabled").text("Card Processing...");    
-          
-          /*
-          After passing all the validations cardToSave should have the following structure:
-           var cardToSave = {
-                              "card": {
-                                "number": "5119159076977991",
-                                "holder_name": "Martin Mucito",
-                                "expiry_month": 9,
-                                "expiry_year": 2020,
-                                "cvc": "123",
-                                "type": "vi"
-                              }
-                            };
-          */
-          
-          var uid = "uid1234";
-          var email = "dev@paymentez.com";
-          /* Add Card converts sensitive card data to a single-use token which you can safely pass to your server to charge the user.
-           *
-           * @param uid User identifier. This is the identifier you use inside your application; you will receive it in notifications.
-           * @param email Email of the user initiating the purchase. Format: Valid e-mail format.
-           * @param card the Card used to create this payment token
-           * @param success_callback a callback to receive the token
-           * @param failure_callback a callback to receive an error
-           */
-          Paymentez.addCard(uid, email, cardToSave, successHandler, errorHandler);
-        }
-        
-        e.preventDefault();
-      });  
-      var successHandler = function(cardResponse) {
-        console.log(cardResponse.card);
-        if(cardResponse.card.status === 'valid'){
-          $('#messages').html('Card Successfully Added<br>'+
-                        'status: ' + cardResponse.card.status + '<br>' +
-                        "Card Token: " + cardResponse.card.token + "<br>" +
-                        "transaction_reference: " + cardResponse.card.transaction_reference
-                      );    
-        }else if(cardResponse.card.status === 'review'){
-          $('#messages').html('Card Under Review<br>'+
-                        'status: ' + cardResponse.card.status + '<br>' +
-                        "Card Token: " + cardResponse.card.token + "<br>" +
-                        "transaction_reference: " + cardResponse.card.transaction_reference
-                      ); 
-        }else{
-          $('#messages').html('Error<br>'+
-                        'status: ' + cardResponse.card.status + '<br>' +
-                        "message Token: " + cardResponse.card.message + "<br>"
-                      ); 
-        }
-        submitButton.removeAttr("disabled");
-        submitButton.text(submitInitialText);
-      };
-      var errorHandler = function(err) {    
-        console.log(err.error);
-        $('#messages').html(err.error.type);    
-        submitButton.removeAttr("disabled");
-        submitButton.text(submitInitialText);
-      };
-    });
-    </script>-->
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
-<div class="modal fade" id="bd-example-modal-terminos" tabindex="-1" role="dialog"
-  aria-labelledby="bd-example-modal-verPlanes" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><b>TERMINOS Y CONDICIONES PARA LA UTILIZACIÓN DEL CANAL BOTON DE
+<div class="modal fade" id="bd-example-modal-terminos" tabindex="-1" role="dialog" aria-labelledby="bd-example-modal-verPlanes" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><b>TERMINOS Y CONDICIONES PARA LA UTILIZACIÓN DEL CANAL BOTON DE
           PAGOS ECOMUNDO</b></h5>
-      </div>
-      <div class="modal-body">
-        <div class="">
-          <ol>
-            <li>
-              <p><b>ACEPTACIÓN DEL SERVICIO BOTON DE ECOMUNDO.-</b> Pone a disposición de los usuarios el canal de
-                recaudación Botón de Pagos a través de su página Web el mismo que permite realizar las consultas y/o
-                pagos de los servicios prestados en esta empresa. El servicio de recaudación a través de este canal será
-                prestado por ECOMUNDO en adelante el “PRESTADOR” que será brindado a usted usuario en adelante “CLIENTE”
-                bajo los términos y condiciones previstos en el presente contrato. Al ingresar y usar este sitio Web el
-                “CLIENTE” expresa su voluntad y acepta los términos y condiciones establecidos pulsando sobre el
-                recuadro “ACEPTO”, si el “CLIENTE” NO está de acuerdo con estos términos y condiciones no acceda o haga
-                uso de este sitio, por cuanto se entiende que existe un acuerdo en común entre las partes tanto del
-                “PRESTADOR” como por parte del “CLIENTE” para realizar sus consultas y/o pagos de sus planillas de
-                consumo telefónico.</p>
-            </li>
-            <li>
-              <p><b>REGISTRO POR PARTE DEL CLIENTE.-</b> Próximamente el PRESTADOR habilitará este registro para que el
-                CLIENTE pueda acceder a las consultas y/o pagos de los servicios adquiridos a través de la página Web
-                que el “PRESTADOR” pone a su disposición deberá registrarse y proporcionar ciertos datos personales que
-                serán solicitados a fin de poder suministrarle nuestros servicios, el “CLIENTE” brindará toda la
-                información verdadera, precisa y completa, esta información provista por el “CLIENTE” se actualizará a
-                la brevedad. En caso de que el “CLIENTE” proporcione información falsa, imprecisa o incompleta el
-                “PRESTADOR” podrá dar por concluido este contrato. El “CLIENTE” al momento de finalizar el registro se
-                le proporcionará un nombre de inicio de sesión y contraseña y será el responsable de lo que suceda con
-                su nombre de inicio de sesión y contraseña puesto que es el responsable del manejo de su clave y nombre
-                de usuario.</p>
-            </li>
-            <li>
-              <p><b>MODIFICACIONES El “PRESTADOR”.-</b> Podrá modificar cuantas veces sea necesario los términos y
-                condiciones establecidas en este contrato con el fin de aclararlos sin necesidad de formalidad alguna,
-                cada vez que el “PRESTADOR” realice un cambio a estos términos y condiciones serán informados en la
-                página principal debiendo el cliente pulsar sobre el recuadro “ACEPTO” si el cliente no pulsara sobre el
-                recuadro “ACEPTO” se dará por concluido en ese mismo momento, sin incurrir por ello en responsabilidad
-                alguna para el “PRESTADOR”.</p>
-            </li>
-            <li>
-              <p><b>COSTOS.-</b> El “PRESTADOR” en la actualidad ofrece este servicio de manera gratuita, sin que ello
-                limite en un futuro a su modificación, la misma que será notificada a través de esta página Web.</p>
-            </li>
-            <li>
-              <p><b>SERVICIOS.-</b> Los servicios disponibles son los que se encuentran habilitados al momento de su acceso
-                en el sitio Web disponible por el “PRESTADOR”.</p>
-            </li>
-            <li>
-              <p><b>CONFIDENCIALIDAD.-</b> La utilización del canal de recaudación Botón de Pagos que el “PRESTADOR” pone a
-                disposición del “CLIENTE” es de exclusiva responsabilidad del usuario la cual se considera como
-                información privada. El “PRESTADOR” no se hace responsable por el mal manejo de la información
-                proporcionada al “CLIENTE”.</p>
-            </li>
-            <li>
-              <p><b>POLITICA DE PRIVACIDAD.-</b> Por la prestación de este servicio, el “PRESTADOR” podrá recopilar
-                información de registro, información que pasará a terceros cuando ésta sea requerida por la ley o por
-                acciones legales para las cuales ésta información es relevante, como cuando se trate de una orden
-                judicial o a propósito para prevenir un delito o fraude. En cuyo caso se entenderá que el “CLIENTE” ha
-                dado su permiso para revelar la información constante por la ejecución del servicio.</p>
-            </li>
-            <li>
-              <p><b>PROPIEDAD.-</b> El “CLIENTE” acepta que el “PRESTADOR” es el dueño y propietario de los derechos
-                personales y reales sobre la Base de Datos que se proporcionará en este servicio de recaudación.</p>
-            </li>
-            <li>
-              <p><b>TERMINACION.-</b> El “CLIENTE” tiene el derecho de cancelar o finalizar la utilización de este servicio
-                de consultas y/o pagos de sus servicios en cualquier momento. Una vez cancelado el servicio, el
-                “CLIENTE” no tendrá derecho ni podrá seguir utilizando este canal de recaudación, pero podrá utilizar
-                todos los canales de recaudación que dispone el PRESTADOR. El servicio de recaudación a través de la
-                página Web de ECOMUNDO “Botón de Pagos” estará disponible de forma permanente de 8:00 am a las 22:00 pm
-                del día, los 7 días de la semana y durante los 365 días del año. DIA HORARIO SERVICIO lunes a domingo De
-                8h00 a 22h00 Aclaratoria: los días 5, 12, 19, 26 se habilitará el servicio hasta las 19h00 por procesos
-                de facturación. No obstante, el servicio se podrá interrumpir cuando resulte necesario o conveniente
-                realizar las operaciones de mantenimiento en la red.</p>
-            </li>
-            <li>
-              <p><b>INDEMNIDAD.-</b> El “CLIENTE” se obliga a mantener indemnes de todo reclamo o demanda a el “PRESTADOR”,
-                sus
-                accionistas, funcionarios, agentes y empleados, incluyendo honorarios de abogados, hincado por algún
-                tercero debido a,
-                o que surja como consecuencia del uso por parte suya del servicio que se le ha proporcionado, de su
-                violación de los
-                términos y condiciones, o de la violación de algún derecho de un tercero.</p>
-            </li>
-            <li>
-              <p><b>COMERCIAL.-</b> El “CLIENTE” tiene derecho a usar el servicio de consultas y/o pagos de sus servicios
-                como un servicio personal, el “CLIENTE” se obliga además a utilizar responsablemente cada uno de los
-                servicios habilitados.</p>
-            </li>
-            <li>
-              <p><b>PROHIBICIONES.-</b> El “CLIENTE” se obliga a no realizar cualquiera de los siguientes actos. ¸ Fingir
-                ser una persona; ¸ Violar alguna ley nacional a través del, o en el servicio; ¸ Causar molestias o
-                perturbar a terceros a través del, o en el servicio; ¸ Recopilar o almacenar datos de terceros o acerca
-                de ellos; ¸ Utilizar el servicio de alguna forma que no sea lo expresamente permitido; Reproducir,
-                duplicar, copiar vender o explotar con algún fin comercial alguna parte que por uso o acceso se tiene al
-                servicio; Utilizar términos o expresiones injuriosas, intimidantes, calumniantes o contrarias a las
-                buenas costumbres.</p>
-            </li>
-            <li>
-              <p><b>JURISDICCIÓN Y COMPETENCIA.-</b> La legislación aplicable a este contrato es la ecuatoriana. Para el
-                caso de reclamo con respecto a la relación o ejecución en cumplimiento de las condiciones establecidas
-                en este documento o de la utilización del servicio, incluyendo sin limitación, el reclamo sobre la
-                validez, interpretación, exigibilidad o incumplimiento de dichas condiciones, finalmente será resuelto
-                por los jueces competentes del Cantón Quito, Provincia de Pichincha.</p>
-            </li>
-          </ol>
+            </div>
+            <div class="modal-body">
+                <div class="">
+                    <ol>
+                        <li>
+                            <p><b>ACEPTACIÓN DEL SERVICIO BOTÓN DE PAGOS PROMOTORES EDUCATIVOS EDUPROM S.A.-</b> Pone a disposición de los usuarios el canal de recaudación Botón de Pagos a través de su página Web el mismo que permite realizar las consultas
+                                y/o pagos de los servicios prestados en esta empresa. El servicio de recaudación a través de este canal será prestado por PROMOTORES EDUCATIVOS EDUPROM S.A en adelante el “PRESTADOR” que será brindado a usted usuario en
+                                adelante “CLIENTE” bajo los términos y condiciones previstos en el presente contrato. Al ingresar y usar este sitio Web el “CLIENTE” expresa su voluntad y acepta los términos y condiciones establecidos pulsando sobre el
+                                recuadro “ACEPTO”, si el “CLIENTE” NO está de acuerdo con estos términos y condiciones no acceda o haga uso de este sitio, por cuanto se entiende que existe un acuerdo en común entre las partes tanto del “PRESTADOR” como
+                                por parte del “CLIENTE” para realizar sus consultas y/o pagos de su servicio educativo.</p>
+                        </li>
+                        <li>
+                            <p><b>REGISTRO POR PARTE DEL CLIENTE.-</b> Próximamente el PRESTADOR habilitará este registro para que el CLIENTE pueda acceder a las consultas y/o pagos del servicio adquiridos a través de la página Web que el “PRESTADOR” pone
+                                a su disposición deberá registrarse y proporcionar ciertos datos personales que serán solicitados a fin de poder suministrarle nuestro servicio, el “CLIENTE” brindará toda la información verdadera, precisa y completa, esta
+                                información provista por el “CLIENTE” se actualizará a la brevedad. En caso de que el “CLIENTE” proporcione información falsa, imprecisa o incompleta el “PRESTADOR” podrá dar por concluido este contrato. El “CLIENTE” se
+                                le proporcionará un nombre de inicio de sesión y contraseña y será el responsable de lo que suceda con sus credenciales y de su manejo.</p>
+                        </li>
+                        <li>
+                            <p><b>MODIFICACIONES  El “PRESTADOR”.-</b> Podrá modificar cuantas veces sea necesario los términos y condiciones establecidas en este contrato con el fin de aclararlos sin necesidad de formalidad alguna, cada vez que el “PRESTADOR”
+                                realice un cambio a estos términos y condiciones serán informados en la página web debiendo el cliente pulsar sobre el recuadro “ACEPTO” si el cliente no pulsara sobre el recuadro “ACEPTO” se dará por concluido en ese mismo
+                                momento, sin incurrir por ello en responsabilidad alguna para el “PRESTADOR”.</p>
+                        </li>
+                        <li>
+                            <p><b>COSTOS.-</b> El “PRESTADOR” en la actualidad ofrece este servicio de manera gratuita, sin que ello limite en un futuro a su modificación, la misma que será notificada a través de esta página Web.</p>
+                        </li>
+                        <li>
+                            <p><b>SERVICIOS.-</b> Los servicios disponibles son los que se encuentran habilitados al momento de su acceso en el sitio Web disponible por el “PRESTADOR”.</p>
+                        </li>
+                        <li>
+                            <p><b>CONFIDENCIALIDAD.-</b> La utilización del canal de recaudación Botón de Pagos que el “PRESTADOR” pone a disposición del “CLIENTE” es de exclusiva responsabilidad del usuario la cual se considera como información privada.
+                                El “PRESTADOR” no se hace responsable por el mal manejo de la información proporcionada al “CLIENTE”.</p>
+                        </li>
+                        <li>
+                            <p><b>POLITICA DE PRIVACIDAD.-</b> Por la prestación de este servicio, el “PRESTADOR” podrá recopilar información de registro, información que pasará a terceros cuando ésta sea requerida por la ley o por acciones legales para
+                                las cuales ésta información es relevante, como cuando se trate de una orden judicial o a propósito para prevenir un delito o fraude. En cuyo caso se entenderá que el “CLIENTE” ha dado su permiso para revelar la información
+                                constante por la ejecución del servicio.</p>
+                        </li>
+                        <li>
+                            <p><b>PROPIEDAD.-</b> El “CLIENTE” acepta que el “PRESTADOR” es el dueño y propietario de los derechos personales y reales sobre la Base de Datos que se proporcionará en este servicio de recaudación.</p>
+                        </li>
+                        <li>
+                            <p><b>TERMINACION.-</b> El “CLIENTE” tiene el derecho de cancelar o finalizar la utilización de este servicio de consultas y/o pagos de sus servicios en cualquier momento. Una vez cancelado el servicio, el “CLIENTE” no tendrá
+                                derecho ni podrá seguir utilizando este canal de recaudación, pero podrá utilizar todos los canales de recaudación que dispone el PRESTADOR. No obstante, el servicio se podrá interrumpir cuando resulte necesario o conveniente
+                                realizar las operaciones de mantenimiento en la red.</p>
+                        </li>
+                        <li>
+                            <p><b>1INDEMNIDAD.-</b> El “CLIENTE” se obliga a mantener indemnes de todo reclamo o demanda a el “PRESTADOR”, sus accionistas, funcionarios, agentes y empleados, incluyendo honorarios de abogados, hincado por algún tercero debido
+                                a, o que surja como consecuencia del uso por parte suya del servicio que se le ha proporcionado, de su violación de los términos y condiciones, o de la violación de algún derecho de un tercero.</p>
+                        </li>
+                        <li>
+                            <p><b>COMERCIAL.-</b> El “CLIENTE” tiene derecho a usar el servicio de consultas y/o pagos de sus servicios como un servicio personal, el “CLIENTE” se obliga además a utilizar responsablemente cada uno de los servicios habilitados.</p>
+                        </li>
+                        <li>
+                            <p><b>PROHIBICIONES.-</b> El “CLIENTE” se obliga a no realizar cualquiera de los siguientes actos: fingir ser una persona; ¸ violar alguna ley nacional a través del, o en el servicio; ¸ causar molestias o perturbar a terceros
+                                a través del, o en el servicio; ¸ recopilar o almacenar datos de terceros o acerca de ellos; ¸ utilizar el servicio de alguna forma que no sea lo expresamente permitido; ¸ reproducir, duplicar, copiar vender o explotar
+                                con algún fin comercial alguna parte que por uso o acceso se tiene al servicio; ¸ utilizar términos o expresiones injuriosas, intimidantes, calumniantes o contrarias a las buenas costumbres.</p>
+                        </li>
+                        <li>
+                            <p><b>CANCELACIÓN Y DEVOLUCIÓN.-</b> Si una vez matriculado el alumno, sus progenitores o representantes deciden retirarlo de la institución, deberán comunicar de inmediato a los directivos del centro educativo. No se podrá solicitar
+                                el reembolso de la matrícula ni de las pensiones que hayan sido devengadas. El Representante se compromete a cancelar los valores correspondientes a los servicios educativos y adicionales voluntarios recibidos a favor del
+                                estudiante que representa, hasta el último período mensual de asistencia al plantel.</p>
+                        </li>
+                        <li>
+                            <p><b>TRÁMITE Y COMPETENCIA: CLÁUSULA COMPROMISORIA.-</b> Cualquier cuestión o controversia originadas en este convenio o relacionadas con él, serán resueltas por arbitraje en la Cámara de Arbitraje y Mediación de la Universidad
+                                de Especialidades Espíritu Santo de acuerdo con las reglas de la Ley de Arbitraje y Mediación y del Reglamento de dicho Centro. Las partes convienen además en lo siguiente:</p>
+                            <ul>
+                                <li type="disc">
+                                    <p>Los árbitros serán seleccionados conforme lo establecido en la Ley de Arbitraje y Mediación.</p>
+                                </li>
+                                <li type="disc">
+                                    <p>Las partes renuncian a la jurisdicción ordinaria, se obligan a acatar el laudo que expida el Tribunal Arbitral y se compromete a no interponer ningún recurso en contra del mismo.</p>
+                                </li>
+                                <li type="disc">
+                                    <p>Para la ejecución de medidas cautelares el Tribunal Arbitral está facultado para solicitar de los funcionarios públicos, judiciales, policiales y administrativos su cumplimiento, sin que sea necesario recurrir a juez
+                                        ordinario alguno.</p>
+                                </li>
+                                <li type="disc">
+                                    <p>El Tribunal Arbitral está integrado por un árbitro.</p>
+                                </li>
+                                <li type="disc">
+                                    <p>El arbitraje será en derecho.</p>
+                                </li>
+                                <li type="disc">
+                                    <p>El procedimiento arbitral será confidencial.</p>
+                                </li>
+                                <li type="disc">
+                                    <p>El lugar de arbitraje será las instalaciones de la Cámara de Arbitraje y Mediación de la Universidad de Especialidades Espíritu Santo"</p>
+                                </li>
+                            </ul>
+                            <p>En relación a la mora de “el (la) representante)” será resuelta por uno de los Jueces de las Unidades Judiciales del Consejo de la Judicatura, de conformidad a lo determinado en el Código Orgánico General de Procesos y a la
+                                Cláusula Octava, Inciso último del presente instrumento.</p>
+                        </li>
+                    </ol>
+                </div>
+                <!---------------------------------------------------------------------->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+                <button class="js-paymentez-checkout btn btn-success" data-dismiss="modal">Aceptar</button>
+            </div>
         </div>
-        <!---------------------------------------------------------------------->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
-        <button type="submit" #guardarModal class="btn btn-success" (ngClik)="guardar()">Aceptar</button>
-      </div>
     </div>
-  </div>
 </div>
+<div id="response" class=""></div>
