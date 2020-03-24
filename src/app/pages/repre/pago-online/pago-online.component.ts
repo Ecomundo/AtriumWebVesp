@@ -127,7 +127,7 @@ export class PagoOnlineComponent implements OnInit {
           client_app_code: 'ECOMUNDO-EC-CLIENT',
           client_app_key: 'nis24EWnymqMJ1Hn4UumxXJw4Kk38R',
           locale: 'es',
-          env_mode: 'stg',
+          env_mode: 'prod',
           onOpen: function() {
               console.log('modal open');
           },
