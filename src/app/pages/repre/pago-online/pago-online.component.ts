@@ -125,7 +125,7 @@ export class PagoOnlineComponent implements OnInit {
       <script>
       var paymentezCheckout = new PaymentezCheckout.modal({
           client_app_code: 'ECOMUNDO-EC-CLIENT',
-          client_app_key: '8Hf6bFAitUDv5NC66SQAruhJpCIrV0',
+          client_app_key: 'nis24EWnymqMJ1Hn4UumxXJw4Kk38R'',
           locale: 'es',
           env_mode: 'stg',
           onOpen: function() {
