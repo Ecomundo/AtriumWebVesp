@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
           this._router.navigate(['/dashboard']);
         },
         error => {
-          let mensaje = error.json()
+          const mensaje = error.json();
           swal("Oops parece que esta ingresando mal tus datos :S !", mensaje.message, "error");
         }
       );
@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
           this._router.navigate(['/pago_online']);
         },
         error => {
-          let mensaje = error.json()
+          const mensaje = error.json();
           swal("Oops parece que esta ingresando mal tus datos :S !", mensaje.message, "error");
         }
       );
