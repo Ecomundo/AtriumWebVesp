@@ -10,7 +10,7 @@ declare const $: any;
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
-  cam = 'collapse';
+  cam = 'collapse show';
   pro = false;
   hij = false;
   // tslint:disable-next-line: radix
@@ -59,10 +59,10 @@ export class SidebarComponent implements OnInit {
   }
 
   cambio() {
-    if ( this.cam === 'collapse') {
+    if ( this.cam === 'collapse show') {
       this.cam = 'collapse show';
     } else {
-      this.cam = 'collapse';
+      this.cam = 'collapse show';
     }
   }
 
